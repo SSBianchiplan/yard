@@ -1,0 +1,69 @@
+{
+  "app": {
+    "name": "GPlanSiS | YARD",
+    "tagline": "Industrial Yard Operations",
+    "plant": "Plant"
+  },
+  "nav": {
+    "controlTower": "Control tower",
+    "gate": "Gatehouse",
+    "visits": "Visits",
+    "catalog": "Master data",
+    "scheduling": "Scheduling",
+    "weighing": "Weighbridge",
+    "kiosk": "Kiosk",
+    "moves": "Moves",
+    "tower": "Tower + AI",
+    "users": "Users",
+    "yards": "Yards"
+  },
+  "action": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "search": "Search",
+    "refresh": "Refresh",
+    "clear": "Clear",
+    "close": "Close"
+  },
+  "label": {
+    "language": "Language",
+    "theme": "Theme",
+    "density": "Density",
+    "liveOn": "Live",
+    "liveOff": "Disconnected"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "hmi": "HMI"
+  },
+  "density": {
+    "compact": "Compact",
+    "default": "Default",
+    "touch": "Touch"
+  },
+  "state": {
+    "loading": "Loading…",
+    "error": "Failed to load",
+    "empty": "Nothing here"
+  },
+  "unit": {
+    "kg": "kg",
+    "t": "t",
+    "lb": "lb",
+    "min": "min",
+    "hour": "h",
+    "percent": "%"
+  },
+  "time": {
+    "hoursMinutes": "{{hours}}h {{minutes}}m",
+    "minutes": "{{minutes}}m"
+  },
+  "user": {
+    "menu": "My account",
+    "changePassword": "Change password",
+    "signOut": "Sign out",
+    "plant": "Yard"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "app": {
+    "name": "GPlanSiS | YARD",
+    "tagline": "Gestão de Pátio Industrial",
+    "plant": "Planta"
+  },
+  "nav": {
+    "controlTower": "Torre de controle",
+    "gate": "Guarita",
+    "visits": "Visitas",
+    "catalog": "Cadastro",
+    "scheduling": "Agendamento",
+    "weighing": "Balança",
+    "kiosk": "Totem",
+    "moves": "Manobra",
+    "tower": "Torre + IA",
+    "users": "Usuários",
+    "yards": "Pátios"
+  },
+  "action": {
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "search": "Buscar",
+    "refresh": "Atualizar",
+    "clear": "Limpar",
+    "close": "Fechar"
+  },
+  "label": {
+    "language": "Idioma",
+    "theme": "Tema",
+    "density": "Densidade",
+    "liveOn": "Ao vivo",
+    "liveOff": "Sem conexão"
+  },
+  "theme": {
+    "light": "Claro",
+    "dark": "Escuro",
+    "hmi": "HMI"
+  },
+  "density": {
+    "compact": "Compacta",
+    "default": "Padrão",
+    "touch": "Toque"
+  },
+  "state": {
+    "loading": "Carregando…",
+    "error": "Falha ao carregar",
+    "empty": "Nada por aqui"
+  },
+  "unit": {
+    "kg": "kg",
+    "t": "t",
+    "lb": "lb",
+    "min": "min",
+    "hour": "h",
+    "percent": "%"
+  },
+  "time": {
+    "hoursMinutes": "{{hours}}h {{minutes}}min",
+    "minutes": "{{minutes}}min"
+  },
+  "user": {
+    "menu": "Minha conta",
+    "changePassword": "Trocar senha",
+    "signOut": "Sair",
+    "plant": "Pátio"
+  }
+}

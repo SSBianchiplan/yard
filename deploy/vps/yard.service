@@ -1,0 +1,33 @@
+# /etc/systemd/system/yard.service
+# GPlanSiS|YARD — uvicorn no loopback, atrás do Caddy (yard.gplansis.com).
+#
+# UM worker, e é decisão de desenho: o barramento de eventos da torre (WebSocket)
+# é in-process. Dois workers = duas torres que não se veem.
+[Unit]
+Description=GPlanSiS|YARD (gestão de pátio)
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=simple
+User=yard
+Group=yard
+WorkingDirectory=/opt/yard/api
+EnvironmentFile=/opt/yard/.env
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStartPre=/opt/yard/.venv/bin/python -m alembic upgrade head
+ExecStart=/opt/yard/.venv/bin/uvicorn app.main:app \
+  --host 127.0.0.1 --port ${YARD_PORT} --workers 1 \
+  --proxy-headers --forwarded-allow-ips 127.0.0.1
+Restart=on-failure
+RestartSec=5
+
+# Código somente leitura para o serviço: falha de upload não vira reescrita do app.
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/lib/yard
+PrivateTmp=yes
+
+[Install]
+WantedBy=multi-user.target

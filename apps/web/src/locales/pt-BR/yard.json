@@ -1,0 +1,155 @@
+{
+  "controlTower": {
+    "title": "Torre de controle",
+    "subtitle": "Pátio ao vivo",
+    "mapTitle": "Mapa de pátio",
+    "queueTitle": "Fila e pátio",
+    "updatedAt": "Atualizado às {{time}}"
+  },
+  "map": {
+    "legend": {
+      "free": "Livre",
+      "occupied": "Ocupada",
+      "over": "Dwell estourado",
+      "blocked": "Bloqueada"
+    },
+    "slot": "Vaga",
+    "dock": "Doca",
+    "gate": "Guarita",
+    "scale": "Balança",
+    "selectedSlot": "Vaga {{code}}",
+    "emptySelection": "Clique numa vaga para ver o veículo",
+    "fit": "Enquadrar",
+    "zoomIn": "Aproximar",
+    "zoomOut": "Afastar"
+  },
+  "kpi": {
+    "vehiclesInYard": "Veículos em pátio",
+    "atGateIn": "Na guarita",
+    "atDock": "Em doca",
+    "slotOccupancy": "Ocupação de vagas",
+    "dockOccupancy": "Ocupação de docas",
+    "gateInToday": "Entradas hoje",
+    "gateOutToday": "Saídas hoje",
+    "avgDwell": "Dwell médio (hoje)",
+    "p95Dwell": "Dwell p95 (hoje)",
+    "overTargetDwell": "Dwell acima da meta",
+    "manualEventRate": "Eventos digitados (24h)",
+    "footer": {
+      "ofTotal": "{{used}} de {{total}}",
+      "target": "meta {{value}}",
+      "automaticShare": "{{value}} automáticos"
+    },
+    "detail": {
+      "current": "Valor agora",
+      "behind": "{{count}} veículo(s) por trás deste número — clique para abrir",
+      "inYard": "Parados em vaga",
+      "blocked": "Com pendência aberta",
+      "avgDwell": "Dwell médio (hoje)",
+      "worstDwell": "Maior dwell agora",
+      "openVisits": "Visitas abertas",
+      "gateInToday": "Entradas hoje",
+      "gateOutToday": "Saídas hoje",
+      "slotsOccupied": "Vagas ocupadas",
+      "slotsFree": "Vagas livres",
+      "slotsBlocked": "Vagas bloqueadas",
+      "slotsTotal": "Vagas no pátio",
+      "docksOccupied": "Docas ocupadas",
+      "docksFree": "Docas livres",
+      "docksBlocked": "Docas bloqueadas",
+      "docksTotal": "Docas na planta",
+      "manualShare": "Digitados por pessoa",
+      "automaticShare": "Capturados do campo",
+      "how": {
+        "vehiclesInYard": "Visitas dentro da planta: em vaga ou em doca",
+        "atGateIn": "Visitas que entraram e ainda não foram liberadas para o pátio",
+        "atDock": "Visitas encostadas em doca neste momento",
+        "slotOccupancy": "Vagas com ocupação aberta ÷ vagas do pátio",
+        "dockOccupancy": "Docas ocupadas ÷ docas da planta",
+        "p95Dwell": "95% das visitas de hoje ficaram menos que isto",
+        "overTargetDwell": "Visitas acima da meta de dwell da própria operação",
+        "manualEventRate": "Eventos digitados ÷ eventos das últimas 24 h"
+      }
+    }
+  },
+  "visit": {
+    "title": "Visitas",
+    "empty": "Nenhuma visita no filtro atual",
+    "footer": "{{count}} visitas",
+    "onlyOpen": "Somente em pátio",
+    "searchPlaceholder": "Placa ou referência",
+    "column": {
+      "reference": "Visita",
+      "plate": "Placa",
+      "driver": "Motorista",
+      "carrier": "Transportadora",
+      "product": "Produto",
+      "operation": "Operação",
+      "state": "Estado",
+      "slot": "Vaga",
+      "dock": "Doca",
+      "arrived": "Chegada",
+      "gateIn": "Entrada",
+      "gateOut": "Saída",
+      "dwell": "Dwell",
+      "document": "Documento"
+    },
+    "state": {
+      "expected": "Anunciado",
+      "at_gate_in": "Na guarita",
+      "in_yard": "Em pátio",
+      "at_dock": "Em doca",
+      "at_gate_out": "Saindo",
+      "departed": "Saiu",
+      "rejected": "Recusado"
+    },
+    "action": {
+      "assignSlotAuto": "Liberar para pátio",
+      "assignSlot": "Alocar vaga",
+      "assignDock": "Encostar em doca",
+      "gateOut": "Registrar saída",
+      "detail": "Detalhe"
+    },
+    "blocked": "Saída bloqueada: {{reason}}",
+    "events": "Trilha de eventos",
+    "eventSource": {
+      "manual": "digitado",
+      "device": "dispositivo",
+      "simulator": "simulador",
+      "system": "sistema",
+      "ai_confirmed": "IA confirmada"
+    }
+  },
+  "operation": {
+    "RECEBIMENTO_GRANEL": "Recebimento a granel",
+    "RECEBIMENTO_PALETIZADO": "Recebimento paletizado",
+    "EXPEDICAO_GRANEL": "Expedição a granel",
+    "EXPEDICAO_PALETIZADA": "Expedição paletizada",
+    "DEVOLUCAO": "Devolução",
+    "TRANSFERENCIA": "Transferência"
+  },
+  "direction": {
+    "inbound": "Entrada",
+    "outbound": "Saída",
+    "transit": "Trânsito"
+  },
+  "dataQuality": {
+    "fresh": "atual",
+    "stale": "obsoleto",
+    "invalid": "inválido",
+    "no_comm": "sem comunicação"
+  },
+  "detail": {
+    "subtitle": "{{operation}} · posição {{position}}",
+    "target": "Meta de dwell",
+    "createMove": "Criar tarefa de manobra",
+    "sendToDock": "Encostar em doca",
+    "startWeighing": "Abrir pesagem",
+    "goToWeighing": "Ir para a pesagem",
+    "ticketOpen": "Ticket {{reference}} já aberto",
+    "targetSlot": "Destino: vaga",
+    "targetDock": "Destino: doca",
+    "open": "Abrir",
+    "openActions": "Ações da visita"
+  }
+}

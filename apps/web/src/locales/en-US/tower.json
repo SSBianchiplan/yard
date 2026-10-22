@@ -1,0 +1,55 @@
+{
+  "title": "Control tower",
+  "interlock": "AI proposes; a human decides. Physical commands only after a recorded approval.",
+  "proposals": "Agent proposals",
+  "noProposals": "No active proposal",
+  "alarms": "Bottlenecks",
+  "noAlarms": "No open bottleneck",
+  "actor": "Decision maker",
+  "expiresAt": "Expires at {{time}}",
+  "confidence": "confidence {{value}}",
+  "approvedBy": "Approved by {{actor}}",
+  "acknowledgedBy": "acknowledged by",
+  "threshold": "{{value}} · threshold {{threshold}}",
+  "kind": {
+    "dock_resequence": "Resequence dock",
+    "slot_reassign": "Reassign slot",
+    "queue_priority": "Reprioritise queue",
+    "dwell_alert": "Excessive dwell",
+    "release_forecast": "Release forecast",
+    "gate_command": "Gate command"
+  },
+  "impact": {
+    "visits_affected": "Visits affected",
+    "minutes_over_target": "Minutes over target",
+    "demurrage_risk": "Demurrage risk",
+    "displaced_appointments": "Appointments displaced",
+    "delayed_minutes": "Delay minutes",
+    "conflicting_references": "Conflicts",
+    "distance_saved_m": "Metres saved"
+  },
+  "metric": {
+    "gate_queue": "Gatehouse queue above threshold",
+    "over_dwell": "Dwell above target",
+    "demurrage_risk": "Demurrage risk",
+    "late_appointments": "Late appointments"
+  },
+  "action": {
+    "generate": "Run agent",
+    "approve": "Approve",
+    "reject": "Reject",
+    "execute": "Execute",
+    "acknowledge": "Acknowledge",
+    "shelve": "Shelve"
+  },
+  "kpi": {
+    "gateQueue": "Gatehouse queue",
+    "inYard": "In yard",
+    "overDwell": "Dwell over target",
+    "demurrageRisk": "Demurrage risk",
+    "docks": "Docks busy",
+    "lateAppointments": "Late appointments",
+    "openMoves": "Open moves",
+    "openHolds": "Open holds"
+  }
+}

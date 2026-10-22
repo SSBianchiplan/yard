@@ -1,0 +1,67 @@
+{
+  "title": "Weighbridge",
+  "subtitle": "Gross · tare · net, with image and hash",
+  "console": "Weighing console",
+  "tickets": "Tickets",
+  "empty": "No ticket",
+  "divergenceBlocks": "Divergence of {{value}} against the fiscal document: exit blocked",
+  "field": {
+    "scale": "Weighbridge",
+    "visit": "Visit",
+    "visitPlaceholder": "YRD-2026-000123",
+    "documentNet": "NF-e net weight (kg)",
+    "documentNetHint": "Used for the weight × fiscal document check"
+  },
+  "reading": {
+    "stable": "Stable",
+    "unstable": "In motion",
+    "noComm": "No comms"
+  },
+  "action": {
+    "open": "Open ticket",
+    "captureGross": "Capture gross",
+    "captureTare": "Capture tare",
+    "close": "Close ticket",
+    "reprint": "Reprint"
+  },
+  "manual": {
+    "title": "Manual weighing (exception)",
+    "weight": "Keyed-in weight (kg)",
+    "reason": "Reason",
+    "secondFactor": "Second factor (authorised user)",
+    "hint": "Requires a reason and a second human; counts in the manual exception KPI"
+  },
+  "state": {
+    "open": "Open",
+    "first_weight": "First weight",
+    "second_weight": "Second weight",
+    "closed": "Closed",
+    "cancelled": "Cancelled"
+  },
+  "source": {
+    "device": "Device",
+    "manual": "Keyed in",
+    "simulator": "Simulator"
+  },
+  "tareSource": {
+    "registered": "registered",
+    "measured": "measured"
+  },
+  "column": {
+    "reference": "Ticket",
+    "state": "State",
+    "gross": "Gross",
+    "tare": "Tare",
+    "net": "Net",
+    "divergence": "Divergence",
+    "source": "Source",
+    "hash": "Hash"
+  },
+  "kpi": {
+    "divergenceAvg": "Average divergence",
+    "manualShare": "Manual weighings",
+    "ticketsToday": "Tickets today",
+    "reprints": "Reprints"
+  },
+  "linkedVisit": "Visit {{visit}} · plate {{plate}} · document {{document}}"
+}

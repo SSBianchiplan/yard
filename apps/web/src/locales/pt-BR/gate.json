@@ -1,0 +1,116 @@
+{
+  "checkin": {
+    "title": "Entrada de veículo",
+    "subtitle": "Guarita · registro manual",
+    "field": {
+      "plate": "Placa",
+      "driverDocument": "Documento do motorista",
+      "operationType": "Tipo de operação",
+      "product": "Produto",
+      "gate": "Guarita",
+      "documentNumber": "NF-e / CT-e",
+      "sealNumber": "Lacre",
+      "notes": "Observação"
+    },
+    "placeholder": {
+      "plate": "ABC1D23",
+      "driverDocument": "CPF sem pontuação",
+      "select": "Selecione",
+      "optional": "Opcional"
+    },
+    "hint": {
+      "documentNumber": "Chave ou número do documento fiscal",
+      "plate": "Leitura de LPR entra na Fatia 4; aqui é digitação de exceção"
+    },
+    "submit": "Registrar entrada",
+    "success": "Entrada registrada: {{reference}}"
+  },
+  "queue": {
+    "title": "Fila da guarita",
+    "empty": "Nenhum veículo aguardando triagem",
+    "waiting": "aguardando há {{duration}}"
+  },
+  "yard": {
+    "title": "Em pátio",
+    "empty": "Pátio vazio"
+  },
+  "action": {
+    "release": "Liberar para pátio",
+    "gateOut": "Registrar saída",
+    "dock": "Encostar em doca"
+  },
+  "kiosk": {
+    "title": "Totem da guarita",
+    "subtitle": "Identificar · conferir · liberar",
+    "step": "Passo",
+    "of": "de",
+    "next": "Avançar",
+    "release": "Liberar cancela",
+    "step1": "Identificar veículo",
+    "step1Hint": "LPR, QR do agendamento, RFID ou digitação de exceção",
+    "step2": "Checklist de entrada",
+    "step2Hint": "Item bloqueante reprovado não deixa liberar",
+    "step3": "Liberar cancela",
+    "step3Hint": "O comando só sai com permissivo do CLP",
+    "method": "Método",
+    "value": "Leitura",
+    "valueHint": "Placa, referência do agendamento ou TAG",
+    "confidence": "Confiança da leitura",
+    "confidenceHint": "Abaixo de 0,85 vai para conferência humana",
+    "identify": "Identificar",
+    "visit": "Visita na guarita",
+    "submitChecklist": "Enviar checklist",
+    "device": "Cancela: {{code}}",
+    "noDevice": "Nenhuma cancela disponível",
+    "permissiveNote": "O sistema não substitui função de segurança: o CLP tem a palavra final"
+  },
+  "method": {
+    "lpr": "LPR",
+    "qr": "QR",
+    "rfid": "RFID",
+    "badge": "Crachá",
+    "manual": "Digitado",
+    "whatsapp": "WhatsApp"
+  },
+  "decision": {
+    "admit": "Liberado",
+    "queue": "Fila de espera",
+    "reject": "Recusado"
+  },
+  "severity": {
+    "blocking": "Bloqueante",
+    "warning": "Atenção",
+    "info": "Informativo"
+  },
+  "command": {
+    "requested": "Solicitado",
+    "permitted": "Permitido",
+    "sent": "Enviado",
+    "acknowledged": "Confirmado pelo campo",
+    "failed": "Falhou",
+    "denied_by_plc": "Negado pelo CLP",
+    "timeout": "Sem resposta"
+  },
+  "checklist": {
+    "blocked": "Itens reprovados: {{items}}",
+    "pass": "Conforme",
+    "fail": "Reprovado",
+    "pending": "{{count}} item(ns) ainda não conferido(s)",
+    "selectVisit": "Escolha a visita que está na guarita"
+  },
+  "identifications": {
+    "title": "Identificações recentes"
+  },
+  "item": {
+    "EPI_COMPLETE": "EPI completo",
+    "FIRE_EXTINGUISHER": "Extintor válido",
+    "CARGO_SECURED": "Carga amarrada",
+    "SEAL_INTACT": "Lacre íntegro",
+    "TIRE_CONDITION": "Condição dos pneus",
+    "DRIVER_BRIEFING": "Orientação ao motorista",
+    "HAZMAT_PLACARD": "Placa de produto perigoso",
+    "HAZMAT_KIT": "Kit de emergência",
+    "LEAK_INSPECTION": "Inspeção de vazamento",
+    "HAZMAT_DOCUMENTATION": "Documentação de produto perigoso"
+  }
+}

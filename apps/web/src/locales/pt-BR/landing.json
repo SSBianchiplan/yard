@@ -1,0 +1,231 @@
+{
+  "meta": {
+    "brand": "GPlanSiS | YARD",
+    "tagline": "Gestão de Pátio Industrial"
+  },
+  "nav": {
+    "features": "Funcionalidades",
+    "twin": "Gêmeo digital",
+    "food": "Alimentos",
+    "security": "Segurança",
+    "faq": "Dúvidas",
+    "login": "Entrar",
+    "demo": "Agendar demonstração",
+    "language": "Idioma"
+  },
+  "hero": {
+    "eyebrow": "Yard Operating System · gêmeo digital do pátio",
+    "title": "Da guarita à doca, o seu pátio operando em tempo real.",
+    "lead": "O GPlanSiS | YARD orquestra portaria, agendamento, balança, manobra e docas numa torre de controle viva — e mostra onde a planta perde horas antes que vire fila na rua.",
+    "primary": "Acessar o sistema",
+    "secondary": "Falar com um especialista",
+    "note": "Demonstração ao vivo com uma planta de alimentos simulada",
+    "scroll": "Role para percorrer o pátio"
+  },
+  "kpi": {
+    "modules": {
+      "value": "8",
+      "label": "módulos numa só plataforma"
+    },
+    "kpis": {
+      "value": "11",
+      "label": "indicadores ao vivo na torre"
+    },
+    "trail": {
+      "value": "100",
+      "suffix": "%",
+      "label": "das ações com trilha auditável"
+    },
+    "ai": {
+      "value": "0",
+      "label": "comandos de IA sem aprovação humana"
+    }
+  },
+  "label": {
+    "gate": "Portaria · LPR",
+    "scale": "Balança",
+    "yard": "Pátio",
+    "cold": "Cadeia fria",
+    "docks": "Docas",
+    "tower": "Torre de controle",
+    "live": "ao vivo"
+  },
+  "chapter": {
+    "gate": {
+      "kicker": "01 · Portaria automática",
+      "title": "A cancela abre por dado, não por grito.",
+      "text": "LPR, QR do agendamento e RFID identificam o veículo; CNH, checklist e documento fiscal são conferidos na triagem. A cancela só abre com permissivo do CLP e autorizador registrado.",
+      "b1": "Leitura de placa com confiança mínima",
+      "b2": "Checklist que bloqueia de verdade",
+      "b3": "Totem de autoatendimento para o motorista"
+    },
+    "scale": {
+      "kicker": "02 · Balança integrada",
+      "title": "Peso estável capturado, ticket imutável.",
+      "text": "Indicadores Toledo e Filizola por serial ou TCP, bruto e tara com janela de estabilidade, divergência contra a NF-e e antifraude de reentrada.",
+      "b1": "Líquido calculado, nunca digitado",
+      "b2": "Pesagem manual exige segundo fator",
+      "b3": "Divergência vira pendência auditada"
+    },
+    "yard": {
+      "kicker": "03 · Pátio e manobra",
+      "title": "Cada vaga sabe quem está nela — e há quanto tempo.",
+      "text": "Mapa vivo com dwell por veículo, fila de manobra ordenada por custo de movimento e confirmação por leitura na vaga. Cadeia fria e quarentena são tipos de vaga, não observação em planilha.",
+      "b1": "Dwell acima da meta vira exceção colorida",
+      "b2": "Manobrista recebe a tarefa no celular",
+      "b3": "Vaga com tomada para baú refrigerado"
+    },
+    "docks": {
+      "kicker": "04 · Agendamento e docas",
+      "title": "Janela de doca com capacidade finita, sem planilha.",
+      "text": "Gantt de docas com arrastar para reprogramar, conflito detectado antes de soltar, portal do transportador e cronometria de encosto, início, fim e liberação.",
+      "b1": "Prioridade como regra, não como favor",
+      "b2": "Portal para a transportadora se agendar",
+      "b3": "Tempo de doca medido etapa por etapa"
+    },
+    "tower": {
+      "kicker": "05 · Torre de controle + IA",
+      "title": "A IA propõe. A sua equipe decide.",
+      "text": "Gargalos detectados com impacto estimado, propostas com prazo de validade e aprovação humana obrigatória. Alarmes no padrão ISA-18.2 e 11 KPIs atualizados ao vivo.",
+      "b1": "Proposta sem aprovação não executa",
+      "b2": "Alarmes com prioridade e reconhecimento",
+      "b3": "Cor só quando algo está errado (ISA-101)"
+    },
+    "twin": {
+      "kicker": "Gêmeo digital",
+      "title": "O pátio inteiro numa tela — e no bolso do manobrista.",
+      "text": "Campo integrado por MQTT Sparkplug B e OPC UA, qualidade do dado sempre visível e operação degradada quando a rede cai. O mesmo pátio na parede da torre, no tablet da guarita e no celular.",
+      "cta": "Ver a torre ao vivo"
+    }
+  },
+  "problem": {
+    "kicker": "O problema",
+    "title": "O pátio é onde a planta perde horas sem ninguém ver.",
+    "p1": "Caminhão parado na rua esperando a portaria achar a nota.",
+    "p2": "Doca ociosa de manhã e fila à tarde, porque o agendamento mora numa planilha.",
+    "p3": "Peso digitado à mão, divergência descoberta só no faturamento.",
+    "p4": "Manobrista procurando a carreta pelo rádio.",
+    "answer": "O YARD transforma cada um desses momentos num evento com dono, prazo e trilha."
+  },
+  "features": {
+    "kicker": "Funcionalidades",
+    "title": "Tudo o que acontece entre a guarita e a doca.",
+    "gate": {
+      "title": "Portaria automática",
+      "text": "LPR, QR e RFID, triagem com checklist, totem para o motorista e cancela com permissivo."
+    },
+    "scheduling": {
+      "title": "Agendamento",
+      "text": "Janelas de doca com capacidade finita, prioridade configurável e portal do transportador."
+    },
+    "weighing": {
+      "title": "Balança",
+      "text": "Bruto, tara e líquido derivados, antifraude, divergência × NF-e e ticket imutável."
+    },
+    "moves": {
+      "title": "Manobra",
+      "text": "Fila por custo de movimento, aceite no celular e confirmação por leitura na vaga."
+    },
+    "docks": {
+      "title": "Docas",
+      "text": "Cronometria de encosto a liberação, pendências e segregação de quem libera."
+    },
+    "iot": {
+      "title": "IoT / OT",
+      "text": "MQTT Sparkplug B, OPC UA, saúde dos dispositivos e operação degradada."
+    },
+    "tower": {
+      "title": "Torre + IA",
+      "text": "KPIs ao vivo, alarmes ISA-18.2 e propostas de IA com aprovação humana."
+    },
+    "integrations": {
+      "title": "Integrações",
+      "text": "Outbox transacional para ERP, NF-e com validação e notificações com opt-out."
+    }
+  },
+  "food": {
+    "kicker": "Pronto para alimentos",
+    "title": "Cadeia fria, quarentena sanitária e granel no mesmo fluxo.",
+    "text": "A demonstração roda uma planta de alimentos: farinha, açúcar e leite a granel na balança; embalagens paletizadas; expedição seca e refrigerada.",
+    "i1": "Vagas de cadeia fria com tomada para baú refrigerado",
+    "i2": "Quarentena sanitária como zona de pátio",
+    "i3": "Recebimento a granel com pesagem obrigatória",
+    "i4": "Expedição seca e refrigerada com janelas próprias",
+    "segments": "Também para",
+    "s1": "Bebidas",
+    "s2": "Química",
+    "s3": "Siderurgia",
+    "s4": "Automotivo",
+    "s5": "Logística e CD",
+    "s6": "Agro"
+  },
+  "security": {
+    "kicker": "Segurança e governança",
+    "title": "Regra de negócio no banco, não na boa vontade.",
+    "db": {
+      "title": "Invariantes no PostgreSQL",
+      "text": "Vaga dupla, veículo em dois lugares, ticket fechado alterado: o banco recusa, mesmo por SQL direto."
+    },
+    "trail": {
+      "title": "Trilha append-only",
+      "text": "Cada evento com ator, origem e horário — digitado, dispositivo ou IA confirmada."
+    },
+    "roles": {
+      "title": "Acesso por perfil",
+      "text": "Quem agenda não libera, quem pesa não aprova exceção. Segregação de função em cada rota."
+    },
+    "lgpd": {
+      "title": "LGPD",
+      "text": "Dado pessoal do motorista com finalidade, retenção definida e acesso mínimo."
+    }
+  },
+  "steps": {
+    "kicker": "Implantação",
+    "title": "Do contrato ao pátio operando.",
+    "s1": {
+      "title": "Desenho do pátio",
+      "text": "Zonas, vagas, docas, guaritas e balanças desenhadas no editor de pátio — ou importadas da planta baixa."
+    },
+    "s2": {
+      "title": "Integração",
+      "text": "Balança, LPR, cancela e ERP conectados; o que precisa sair vai por outbox transacional."
+    },
+    "s3": {
+      "title": "Operação assistida",
+      "text": "Torre ligada, equipe treinada por perfil e indicadores desde a primeira semana."
+    },
+    "s4": {
+      "title": "Evolução",
+      "text": "Propostas da IA calibradas com o histórico real da planta."
+    }
+  },
+  "faq": {
+    "kicker": "Dúvidas",
+    "title": "As perguntas da primeira reunião.",
+    "q1": "Precisa trocar balança, câmera ou cancela?",
+    "a1": "Não. O YARD fala com indicadores Toledo e Filizola por serial ou TCP, com câmeras LPR e com o CLP por OPC UA ou MQTT Sparkplug B.",
+    "q2": "Roda na nuvem ou no servidor da planta?",
+    "a2": "Nos dois. A mesma aplicação sobe em nuvem ou on-premise, com a borda de campo na planta quando a rede exige.",
+    "q3": "E se a rede cair?",
+    "a3": "O campo entra em operação degradada: a qualidade do dado fica visível e nenhum permissivo obsoleto abre cancela.",
+    "q4": "A IA toma decisões sozinha?",
+    "a4": "Não. Ela propõe com impacto estimado e prazo de validade; só executa o que uma pessoa aprova — e o banco recusa qualquer atalho.",
+    "q5": "Dá para ver funcionando antes?",
+    "a5": "Sim. A demonstração ao vivo roda uma planta de alimentos simulada, com guarita, balança, docas e torre se mexendo. Peça um acesso."
+  },
+  "cta": {
+    "kicker": "Próximo passo",
+    "title": "Veja o seu pátio funcionando antes de assinar.",
+    "text": "Em 30 minutos mostramos o YARD com o layout da sua planta: portaria, balança, docas e torre ao vivo.",
+    "primary": "Agendar demonstração",
+    "secondary": "Acessar o sistema",
+    "email": "ou escreva para contato@gplansis.com",
+    "whatsappMessage": "Olá! Quero agendar uma demonstração do GPlanSiS | YARD (gestão de pátio).",
+    "emailSubject": "YARD - demonstração"
+  },
+  "footer": {
+    "text": "Gestão de pátio industrial · parte do hub GPlanSiS",
+    "login": "Acesso ao sistema",
+    "contact": "Contato"
+  }
+}

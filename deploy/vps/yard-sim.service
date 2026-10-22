@@ -1,0 +1,28 @@
+# /etc/systemd/system/yard-sim.service
+# Chegadas simuladas PELA API — é o que faz mapa e fila da demonstração se mexerem.
+# Entra como usuário de serviço (YARD_SIM_EMAIL), então toda ação fica na trilha
+# com um ator identificável. Em planta real este serviço não existe.
+[Unit]
+Description=GPlanSiS|YARD simulador de campo (demonstração)
+After=yard.service
+Requires=yard.service
+
+[Service]
+Type=simple
+User=yard
+Group=yard
+WorkingDirectory=/opt/yard/api
+EnvironmentFile=/opt/yard/.env
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStartPre=/bin/sleep 5
+ExecStart=/bin/sh -c 'exec /opt/yard/.venv/bin/python -m app.simulator --api http://127.0.0.1:${YARD_PORT} --rate ${YARD_SIM_RATE}'
+Restart=always
+RestartSec=15
+
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+
+[Install]
+WantedBy=multi-user.target

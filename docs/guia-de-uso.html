@@ -1,0 +1,834 @@
+<title>Guia de Pátio GPlanSiS|YARD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  /* Paleta ISA-101: campo cinza, cor só onde há anormalidade.
+     O sistema que este guia descreve segue essa regra nas telas; a página segue junto. */
+  :root {
+    --ground: #f1f3f0;
+    --surface: #ffffff;
+    --surface-2: #e6e9e4;
+    --ink: #1b1e1c;
+    --ink-2: #596059;
+    --ink-3: #7d857d;
+    --rule: #ced3cc;
+    --rule-strong: #a9b0a8;
+    --accent: #2a5568;
+    --accent-soft: #dde6ea;
+    --signal: #a4491a;
+    --signal-soft: #f6e6db;
+    --ok: #2c6549;
+    --ok-soft: #dfeae1;
+    --shadow: 0 1px 2px rgba(27, 30, 28, .07);
+
+    --step: clamp(1rem, .93rem + .3vw, 1.0625rem);
+    --sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    --cond: "IBM Plex Sans Condensed", "IBM Plex Sans", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #131614;
+      --surface: #1b1f1c;
+      --surface-2: #232823;
+      --ink: #e6eae5;
+      --ink-2: #9ba49b;
+      --ink-3: #7c857c;
+      --rule: #2f352f;
+      --rule-strong: #454d45;
+      --accent: #86b6cc;
+      --accent-soft: #1e2a30;
+      --signal: #dd8f57;
+      --signal-soft: #2c211a;
+      --ok: #74bd96;
+      --ok-soft: #1a2620;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .4);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #131614;
+    --surface: #1b1f1c;
+    --surface-2: #232823;
+    --ink: #e6eae5;
+    --ink-2: #9ba49b;
+    --ink-3: #7c857c;
+    --rule: #2f352f;
+    --rule-strong: #454d45;
+    --accent: #86b6cc;
+    --accent-soft: #1e2a30;
+    --signal: #dd8f57;
+    --signal-soft: #2c211a;
+    --ok: #74bd96;
+    --ok-soft: #1a2620;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: var(--step);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-underline-offset: .18em; }
+  code, kbd { font-family: var(--mono); font-size: .88em; }
+
+  .wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding-inline: 20px;
+    padding-block: 0 72px;
+  }
+
+  /* ---------------------------------------------------------------- cabeçalho */
+  .masthead {
+    border-bottom: 1px solid var(--rule);
+    padding-block: 48px 30px;
+  }
+  .eyebrow {
+    font-family: var(--cond);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    font-size: .74rem;
+    color: var(--ink-3);
+  }
+  h1 {
+    font-size: clamp(1.9rem, 1.3rem + 2.6vw, 3rem);
+    line-height: 1.08;
+    letter-spacing: -.02em;
+    font-weight: 600;
+    margin: .3em 0 .25em;
+    text-wrap: balance;
+  }
+  .lede {
+    max-width: 62ch;
+    color: var(--ink-2);
+    margin: 0;
+  }
+  .plate-strip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 14px;
+    margin-top: 26px;
+    font-size: .88rem;
+    color: var(--ink-2);
+  }
+  .plate {
+    font-family: var(--mono);
+    font-weight: 500;
+    letter-spacing: .12em;
+    background: var(--surface);
+    border: 1px solid var(--rule-strong);
+    border-radius: 3px;
+    padding: 5px 11px;
+    color: var(--ink);
+  }
+
+  /* ---------------------------------------------------------------- estrutura */
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 38px;
+    padding-top: 38px;
+  }
+  @media (min-width: 1000px) {
+    .layout { grid-template-columns: 210px minmax(0, 1fr); gap: 56px; }
+    .rail { position: sticky; top: calc(28px + env(safe-area-inset-top, 0px)); align-self: start; }
+  }
+  .rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+  .rail a {
+    display: grid;
+    grid-template-columns: 1.6em 1fr;
+    gap: 8px;
+    padding: 5px 8px;
+    border-radius: 3px;
+    text-decoration: none;
+    color: var(--ink-2);
+    font-size: .875rem;
+    line-height: 1.35;
+  }
+  .rail a:hover { background: var(--surface-2); color: var(--ink); }
+  .rail a[aria-current="true"] { background: var(--accent-soft); color: var(--ink); font-weight: 500; }
+  .rail .n { font-family: var(--mono); font-size: .78rem; color: var(--ink-3); padding-top: .12em; }
+  .rail a[aria-current="true"] .n { color: var(--accent); }
+
+  section { scroll-margin-top: 26px; }
+  section + section { margin-top: 52px; }
+  h2 {
+    font-size: clamp(1.25rem, 1.1rem + .6vw, 1.5rem);
+    letter-spacing: -.01em;
+    font-weight: 600;
+    margin: 0 0 4px;
+    text-wrap: balance;
+  }
+  h3 {
+    font-size: 1.02rem;
+    font-weight: 600;
+    margin: 30px 0 6px;
+  }
+  p, ul, ol { max-width: 68ch; }
+  p { margin: 0 0 14px; }
+  ul, ol { padding-left: 1.15em; margin: 0 0 14px; }
+  li { margin-bottom: 6px; }
+  li::marker { color: var(--ink-3); }
+  .section-note {
+    color: var(--ink-2);
+    max-width: 62ch;
+    margin: 0 0 22px;
+  }
+
+  /* ---------------------------------------------------------------- percurso */
+  .steps { display: grid; gap: 14px; }
+  .step {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    box-shadow: var(--shadow);
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr);
+  }
+  .step__n {
+    font-family: var(--mono);
+    font-size: .95rem;
+    color: var(--ink-3);
+    border-right: 1px solid var(--rule);
+    background: var(--surface-2);
+    display: flex;
+    justify-content: center;
+    padding-top: 18px;
+    border-radius: 4px 0 0 4px;
+  }
+  .step__body { padding: 16px 20px 18px; min-width: 0; }
+  .step__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px 12px;
+    margin-bottom: 8px;
+  }
+  .step__head h3 { margin: 0; font-size: 1.05rem; }
+  .where {
+    font-family: var(--mono);
+    font-size: .8rem;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border-radius: 3px;
+    padding: 2px 7px;
+  }
+  .step__body p, .step__body ul, .step__body ol { max-width: 64ch; }
+  .step__body > :last-child { margin-bottom: 0; }
+
+  /* recusa: a única cor forte da página, reservada ao que o sistema não deixa passar */
+  .refuse {
+    margin-top: 14px;
+    border-left: 3px solid var(--signal);
+    background: var(--signal-soft);
+    padding: 11px 14px;
+    border-radius: 0 3px 3px 0;
+    font-size: .93rem;
+    max-width: 64ch;
+  }
+  .refuse b {
+    font-family: var(--cond);
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    font-size: .72rem;
+    color: var(--signal);
+    display: block;
+    margin-bottom: 3px;
+    font-weight: 600;
+  }
+  .refuse code { color: var(--ink); }
+
+  /* ---------------------------------------------------------------- cadeia de estados */
+  .chain {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    margin: 0 0 26px;
+    padding: 14px 16px;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow-x: auto;
+  }
+  .chain span {
+    font-family: var(--mono);
+    font-size: .8rem;
+    white-space: nowrap;
+    color: var(--ink-2);
+  }
+  .chain span.is-state {
+    color: var(--ink);
+    background: var(--surface-2);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 3px 8px;
+  }
+  .chain .arrow { color: var(--rule-strong); }
+
+  /* ---------------------------------------------------------------- tabelas */
+  .scroll-x { overflow-x: auto; border: 1px solid var(--rule); border-radius: 4px; background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; font-size: .91rem; }
+  th, td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  thead th {
+    font-family: var(--cond);
+    text-transform: uppercase;
+    letter-spacing: .09em;
+    font-size: .72rem;
+    color: var(--ink-3);
+    background: var(--surface-2);
+    white-space: nowrap;
+  }
+  tbody tr:last-child td { border-bottom: 0; }
+  td code { color: var(--signal); white-space: nowrap; }
+  .role-table td:first-child code { color: var(--accent); }
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* ---------------------------------------------------------------- blocos utilitários */
+  .grid-2 { display: grid; gap: 14px; grid-template-columns: 1fr; }
+  @media (min-width: 720px) { .grid-2 { grid-template-columns: 1fr 1fr; } }
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 16px 18px;
+  }
+  .panel h3 { margin-top: 0; }
+  .panel > :last-child { margin-bottom: 0; }
+
+  pre {
+    margin: 0 0 14px;
+    padding: 13px 16px;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: .82rem;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+  pre .c { color: var(--ink-3); }
+  pre .pass { color: var(--ok); }
+
+  .locks { list-style: none; padding: 0; max-width: 68ch; }
+  .locks li {
+    display: grid;
+    grid-template-columns: 1.4em 1fr;
+    gap: 8px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .locks li:last-child { border-bottom: 0; }
+  .locks .mark { color: var(--ok); font-family: var(--mono); font-size: .9rem; }
+
+  .checks { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); margin-bottom: 18px; }
+  .check {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--ok);
+    border-radius: 0 4px 4px 0;
+    padding: 11px 14px;
+  }
+  .check .v { font-family: var(--mono); font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+  .check .k { font-size: .82rem; color: var(--ink-2); }
+
+  footer {
+    margin-top: 56px;
+    padding-top: 22px;
+    border-top: 1px solid var(--rule);
+    color: var(--ink-2);
+    font-size: .92rem;
+    max-width: 68ch;
+  }
+  :where(a, summary):focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="eyebrow">GPlanSiS | YARD &nbsp;·&nbsp; Yard Operating System</div>
+    <h1>Guia de pátio</h1>
+    <p class="lede">
+      O que cada tela faz, em que ordem se usa e — principalmente — o que o sistema
+      <strong>não deixa</strong> fazer. Da guarita à doca, com a operação inteira virando registro.
+    </p>
+    <div class="plate-strip">
+      <span>O fio condutor é uma visita real:</span>
+      <span class="plate">AAA3251</span>
+      <span>Stéfano Motorista · a mesma placa que o roteiro automatizado percorre a cada verificação.</span>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="rail" aria-label="Seções do guia">
+      <ol>
+        <li><a href="#comecar"><span class="n">00</span><span>Antes de começar</span></a></li>
+        <li><a href="#perfis"><span class="n">01</span><span>Quem pode o quê</span></a></li>
+        <li><a href="#percurso"><span class="n">02</span><span>Percurso de uma visita</span></a></li>
+        <li><a href="#torre"><span class="n">03</span><span>Torre e IA</span></a></li>
+        <li><a href="#erros"><span class="n">04</span><span>Como o sistema fala</span></a></li>
+        <li><a href="#invariantes"><span class="n">05</span><span>O que é garantido</span></a></li>
+        <li><a href="#verificacao"><span class="n">06</span><span>Verificação</span></a></li>
+      </ol>
+    </nav>
+
+    <main>
+      <!-- ------------------------------------------------------------ 00 -->
+      <section id="comecar">
+        <div class="eyebrow">00</div>
+        <h2>Antes de começar</h2>
+        <p class="section-note">
+          O banco nasce cheio: 1 planta, 3 guaritas, 2 balanças, 24 docas, 180 vagas e o
+          movimento de um dia. Nenhuma tela abre vazia — dá para treinar e demonstrar sem
+          caminhão nenhum.
+        </p>
+
+<pre><span class="c"># subir</span>
+docker compose up -d                 <span class="c"># Postgres/TimescaleDB, API, web</span>
+cd apps/api &amp;&amp; alembic upgrade head  <span class="c"># esquema e invariantes</span>
+python -m app.seed                   <span class="c"># pátio povoado</span>
+python -m app.simulator              <span class="c"># campo em movimento (cancelas, balanças, LPR)</span></pre>
+
+        <p>
+          Web em <code>localhost:5173</code>, API em <code>localhost:8088</code>
+          (<code>/docs</code> para o contrato, <code>/health</code> e <code>/ready</code> para monitoração).
+        </p>
+
+        <h3>A barra superior, presente em todas as telas</h3>
+        <div class="scroll-x">
+          <table>
+            <thead>
+              <tr><th>Controle</th><th>Para que serve</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Idioma</strong></td><td>pt-BR / en-US, em tempo real, sem recarregar.</td></tr>
+              <tr><td><strong>Tema</strong></td><td>Claro, escuro e <strong>HMI</strong> — alto contraste, para sala de controle.</td></tr>
+              <tr><td><strong>Densidade</strong></td><td>Compacta, padrão e <strong>toque</strong> — alvos de 44&nbsp;px, para totem e tablet de pátio.</td></tr>
+              <tr><td><strong>Indicador ao vivo</strong></td><td>Verde: recebendo do campo. Cinza: lendo cache.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:14px">
+          A paleta segue ISA-101: <strong>cor só aparece onde há anormalidade</strong>. Uma tela
+          toda cinza é uma operação saudável — não é uma tela apagada.
+        </p>
+      </section>
+
+      <!-- ------------------------------------------------------------ 01 -->
+      <section id="perfis">
+        <div class="eyebrow">01</div>
+        <h2>Quem pode o quê</h2>
+        <p class="section-note">
+          A segregação de função é do sistema, não do combinado: quem agenda não libera, quem
+          abre uma pendência não a libera, e uma sugestão de IA não vira comando físico sem
+          aprovação humana registrada.
+        </p>
+        <div class="scroll-x">
+          <table class="role-table">
+            <thead><tr><th>Perfil</th><th>Faz</th></tr></thead>
+            <tbody>
+              <tr><td><code>yard.scheduler</code></td><td>Cria, confirma, reprograma e cancela janelas.</td></tr>
+              <tr><td><code>yard.gate</code></td><td>Identificação, triagem, checklist, gate-in e gate-out.</td></tr>
+              <tr><td><code>yard.scale</code></td><td>Abre ticket, captura bruto e tara, fecha ticket.</td></tr>
+              <tr><td><code>yard.spotter</code></td><td>Aceita, inicia e confirma manobras.</td></tr>
+              <tr><td><code>yard.dock</code></td><td>Cronometria de doca e registro de divergência.</td></tr>
+              <tr><td><code>yard.supervisor</code></td><td>Libera pendências, aprova exceções e comandos de IA.</td></tr>
+              <tr><td><code>yard.controller</code></td><td>Torre de controle, KPIs e alarmes.</td></tr>
+              <tr><td><code>portal.carrier</code></td><td>Portal do transportador: pede janela, acompanha a frota.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ------------------------------------------------------------ 02 -->
+      <section id="percurso">
+        <div class="eyebrow">02</div>
+        <h2>O percurso de uma visita</h2>
+        <p class="section-note">
+          Nove passos, na ordem em que acontecem no pátio. A numeração aqui não é enfeite: é a
+          sequência de estados que a visita realmente percorre, e o sistema recusa saltos.
+        </p>
+
+        <div class="chain" role="img" aria-label="Sequência de estados: at_gate_in, in_yard, at_dock, at_gate_out, departed">
+          <span class="is-state">at_gate_in</span><span class="arrow">→</span>
+          <span class="is-state">in_yard</span><span class="arrow">→</span>
+          <span class="is-state">at_dock</span><span class="arrow">→</span>
+          <span class="is-state">in_yard</span><span class="arrow">→</span>
+          <span class="is-state">at_gate_out</span><span class="arrow">→</span>
+          <span class="is-state">departed</span>
+        </div>
+
+        <div class="steps">
+
+          <article class="step">
+            <div class="step__n">1</div>
+            <div class="step__body">
+              <div class="step__head"><h3>Agendamento</h3><span class="where">/scheduling</span></div>
+              <p>
+                Três partes: o <strong>gráfico de janelas</strong> (Gantt por doca), o formulário de
+                nova janela e a lista com o histórico de cada agendamento.
+              </p>
+              <ol>
+                <li>Clique num espaço vazio da faixa da doca — a janela abre com doca e horário preenchidos.</li>
+                <li>Informe placa, motorista, operação e duração; a <strong>grade de disponibilidade</strong> mostra onde cabe e por quê não cabe.</li>
+                <li>Salve: a janela nasce em <code>requested</code>.</li>
+                <li><strong>Confirme</strong> — é a confirmação que reserva a vaga no pátio (aqui, a <code>A-02</code>) e trava a capacidade do recurso.</li>
+              </ol>
+              <p>
+                <strong>Clique na faixa</strong> e abre o detalhe da janela: estado, horário, prioridade,
+                canal, vaga reservada, o rastro de mudanças e as ações — confirmar, trocar de doca,
+                marcar não comparecimento, cancelar. <strong>Arraste</strong> a faixa para reprogramar;
+                clicar só abre.
+              </p>
+              <p>
+                No gráfico: faixa colorida é janela agendada; <strong>hachura é doca bloqueada no
+                dia</strong> (manutenção, parada de planta) e só isso; a linha vertical é o agora; janela
+                que começou antes do início do gráfico aparece aparada na borda, sem vazar para a doca de cima.
+                Doca <em>ocupada agora</em> continua agendável para mais tarde — ocupação é estado do
+                momento, bloqueio é estado do dia.
+              </p>
+              <p>Reprogramar e cancelar exigem motivo, e o impacto (quem mais foi empurrado) aparece antes de você confirmar.</p>
+              <div class="refuse">
+                <b>o sistema recusa</b>
+                Duas janelas sobrepostas na mesma doca · capacidade de recurso estourada · janela dentro
+                de parada de planta · edição em cima de versão velha (<code>ERR_YARD_APPOINTMENT_STALE</code>):
+                se alguém mexeu enquanto você tinha a tela aberta, sua alteração não sobrescreve a dele em silêncio.
+              </div>
+            </div>
+          </article>
+
+          <article class="step">
+            <div class="step__n">2</div>
+            <div class="step__body">
+              <div class="step__head"><h3>Chegada e identificação</h3><span class="where">/kiosk · totem</span></div>
+              <p>Fluxo em etapas, feito para dedo e luva: passos grandes, um por vez, com o trilho no topo permitindo voltar ao que já foi concluído.</p>
+              <ol>
+                <li><strong>Identificar</strong> — LPR, QR do agendamento ou manual. A leitura vem com <strong>confiança</strong>.</li>
+                <li><strong>Triagem</strong> — cruza identificação, agendamento, validade de CNH, restrição do veículo e pendências da transportadora: <code>admit</code>, <code>hold</code> ou <code>reject</code>.</li>
+                <li><strong>Gate-in</strong> — a visita nasce (<code>YRD-…</code>) em <code>at_gate_in</code>.</li>
+                <li><strong>Checklist de entrada</strong> — os itens vêm do tipo de operação. A <strong>reinspeção</strong> é o caminho de volta: corrigido o problema, reinspeciona e segue.</li>
+                <li><strong>Cancela</strong> — o comando só sai com o permissivo do CLP em <code>true</code> e qualidade <code>good</code>.</li>
+              </ol>
+              <div class="refuse">
+                <b>o sistema recusa</b>
+                Leitura abaixo de 0,85 de confiança (<code>ERR_YARD_IDENTIFICATION_LOW_CONFIDENCE</code>) —
+                placa borrada de madrugada não vira entrada automática · item bloqueante reprovado segura
+                o veículo na guarita (<code>ERR_YARD_CHECKLIST_FAILED</code>, com os itens listados) ·
+                permissivo velho (<code>stale</code>) não abre cancela.
+              </div>
+            </div>
+          </article>
+
+          <article class="step">
+            <div class="step__n">3</div>
+            <div class="step__body">
+              <div class="step__head"><h3>Console da guarita</h3><span class="where">/gate</span></div>
+              <p>
+                A visão do fiscal, com teclado: fila de chegada, check-in manual completo (placa,
+                documento do motorista, operação, produto, nota, lacre), quem está no pátio e a ação de
+                <strong>gate-out</strong>. Retaguarda do totem — e plano B quando o totem cai.
+              </p>
+            </div>
+          </article>
+
+          <article class="step">
+            <div class="step__n">4</div>
+            <div class="step__body">
+              <div class="step__head"><h3>Pátio e vaga</h3><span class="where">/ · torre de controle</span></div>
+              <p>A tela inicial é o mapa do pátio, mais a fila de veículos e os KPIs do turno.</p>
+              <ul>
+                <li>O mapa se ajusta sozinho ao conteúdo; tem zoom, pan e “ajustar à tela”. A placa é desenhada dentro da vaga, no tamanho que couber, e some quando não couber — sem texto atravessando o desenho.</li>
+                <li>Legenda: livre, ocupada, bloqueada e <strong>acima do tempo-alvo</strong>.</li>
+                <li><strong>Clique em qualquer vaga, doca ou linha da fila</strong> e abre o detalhe da visita: dados, tempos, eventos, tickets de pesagem e as ações dali — manobrar, encostar em doca, pesar, dar saída.</li>
+                <li><strong>Clique em um KPI</strong> e ele abre: como a conta é feita, as contagens vizinhas que dão contexto e a lista nominal dos veículos por trás do número — e dessa lista se abre a visita.</li>
+              </ul>
+              <p>
+                KPIs: veículos no pátio, em guarita, em doca, ocupação de vagas e docas, <strong>dwell
+                p95</strong>, veículos acima do alvo e o <strong>percentual de eventos automáticos</strong> —
+                quanto da operação o sistema captura sozinho, sem digitação.
+              </p>
+              <div class="refuse">
+                <b>o sistema recusa</b>
+                Estacionar na vaga reservada de um agendamento: a alocação automática pula as vagas
+                reservadas. Reserva que qualquer um ocupa não é reserva.
+              </div>
+            </div>
+          </article>
+
+          <article class="step">
+            <div class="step__n">5</div>
+            <div class="step__body">
+              <div class="step__head"><h3>Manobra</h3><span class="where">/moves</span></div>
+              <p>A fila do manobrista, <strong>ordenada por custo, não por ordem de chegada</strong>: distância, conflito de rota e urgência entram na conta.</p>
+              <ol>
+                <li><strong>Aceitar</strong> a tarefa — ela passa a ser sua.</li>
+                <li><strong>Iniciar</strong>.</li>
+                <li><strong>Confirmar</strong> por leitura do QR da vaga.</li>
+              </ol>
+              <p>
+                Um veículo tem <strong>uma</strong> manobra ativa. Evento offline reenviado não duplica
+                tarefa. Manobra em andamento pode ser cancelada — o pátio muda no meio do caminho.
+              </p>
+              <div class="refuse">
+                <b>o sistema recusa</b>
+                QR de vaga errada não vira erro de digitação: vira <strong>desvio registrado</strong>
+                (<code>ERR_YARD_MOVE_WRONG_SLOT</code>, com esperado × lido) · confirmação manual sem
+                motivo não entra (<code>ERR_YARD_MOVE_CONFIRMATION_REQUIRED</code>) — nem pela tela, nem por SQL direto.
+              </div>
+            </div>
+          </article>
+
+          <article class="step">
+            <div class="step__n">6</div>
+            <div class="step__body">
+              <div class="step__head"><h3>Doca</h3><span class="where">detalhe da visita</span></div>
+              <p>Encostou, o relógio corre por etapa:</p>
+              <div class="chain" style="margin-bottom:14px">
+                <span class="is-state">chegada</span><span class="arrow">→</span>
+                <span class="is-state">encosto</span><span class="arrow">→</span>
+                <span class="is-state">início</span><span class="arrow">→</span>
+                <span class="is-state">pausa</span><span class="arrow">→</span>
+                <span class="is-state">retomada</span><span class="arrow">→</span>
+                <span class="is-state">fim</span><span class="arrow">→</span>
+                <span class="is-state">liberação</span>
+              </div>
+              <p>
+                A pausa pede motivo — falta de empilhadeira, refeição, aguardando conferência. É isso que
+                transforma “demorou 3&nbsp;h” em “1&nbsp;h&nbsp;40 esperando empilhadeira”. A ocupação se fecha
+                na liberação <strong>e também na saída do pátio</strong>: veículo que vai embora não deixa a doca presa.
+              </p>
+              <div class="refuse">
+                <b>o sistema recusa</b>
+                Etapa fora de ordem (<code>ERR_YARD_DOCK_STAGE_INVALID</code>) · dois veículos na mesma
+                doca, por restrição de banco e não por disciplina · divergência de carga sem evidência
+                fotográfica — e a divergência abre pendência automaticamente.
+              </div>
+            </div>
+          </article>
+
+          <article class="step">
+            <div class="step__n">7</div>
+            <div class="step__body">
+              <div class="step__head"><h3>Balança</h3><span class="where">/weighing</span></div>
+              <ol>
+                <li><strong>Abrir ticket</strong> — escolha a balança e a visita (a busca aceita placa ou referência).</li>
+                <li><strong>Capturar bruto</strong> — o peso vem da balança, com verificação de posicionamento.</li>
+                <li><strong>Capturar tara</strong> — aferida na hora; a tara cadastral é referência, não verdade.</li>
+                <li>O <strong>líquido</strong> e a <strong>divergência contra a nota</strong> saem na hora, com a tolerância do produto.</li>
+                <li><strong>Fechar o ticket</strong> — ele ganha hash de integridade e vira imutável.</li>
+              </ol>
+              <p>
+                Peso digitado à mão exige motivo e <strong>segundo fator</strong> (outra pessoa). Do detalhe
+                da visita, o botão de pesagem abre a balança com o ticket já carregado.
+              </p>
+              <div class="refuse">
+                <b>o sistema recusa</b>
+                Veículo mal posicionado não pesa (<code>ERR_YARD_WEIGHT_VEHICLE_MISPLACED</code>) · ticket
+                fechado não muda (<code>ERR_YARD_TICKET_IMMUTABLE</code>) — correção se faz com nova
+                pesagem, não com edição · divergência acima da tolerância abre pendência e segura a saída,
+                com caminho auditado de liberação.
+              </div>
+            </div>
+          </article>
+
+          <article class="step">
+            <div class="step__n">8</div>
+            <div class="step__body">
+              <div class="step__head"><h3>Saída</h3><span class="where">/gate · detalhe da visita</span></div>
+              <p>
+                O gate-out confere, nesta ordem: pendências abertas, checklist de saída, pesagem exigida
+                pela operação e documento fiscal. Bloqueou, a tela diz <strong>qual</strong> é a pendência.
+                Liberada, o gate-out registra a saída, libera vaga e doca e fecha o dwell.
+              </p>
+              <div class="refuse">
+                <b>o sistema recusa</b>
+                Sair com pendência aberta (<code>ERR_YARD_EXIT_BLOCKED_BY_PENDENCY</code>, com o motivo) ·
+                a liberação feita por quem abriu a pendência (<code>ERR_YARD_HOLD_SEGREGATION</code>) —
+                para liberar, outra pessoa.
+              </div>
+            </div>
+          </article>
+
+          <article class="step">
+            <div class="step__n">9</div>
+            <div class="step__body">
+              <div class="step__head"><h3>Trilha</h3><span class="where">/visits</span></div>
+              <p>
+                Busca por placa, motorista, transportadora ou referência, filtro de “somente abertas” e o
+                detalhe completo. A trilha mostra <strong>o que aconteceu, quando e por qual fonte</strong>
+                — dispositivo, manual, integração — com a transição de estado de cada evento. Cada marco
+                também sai para ERP/WMS/BI pela caixa de saída transacional, com idempotência e reentrega.
+              </p>
+              <div class="refuse">
+                <b>o sistema recusa</b>
+                Alterar ou apagar evento da trilha. Ela é <em>append-only</em> no banco.
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ------------------------------------------------------------ 03 -->
+      <section id="torre">
+        <div class="eyebrow">03</div>
+        <h2>Torre de controle e IA</h2>
+        <p class="section-note">A tela de quem olha o pátio inteiro — <code>/tower</code>.</p>
+        <div class="grid-2">
+          <div class="panel">
+            <h3>KPIs de risco</h3>
+            <p>Fila de guarita, veículos acima do dwell, pendências abertas, manobras em aberto, agendamentos atrasados e <strong>risco de demurrage</strong>.</p>
+          </div>
+          <div class="panel">
+            <h3>Alarmes</h3>
+            <p>Prioridade ISA-18.2, reconhecimento nominal e registro de quem reconheceu — sem alarme anônimo.</p>
+          </div>
+        </div>
+        <h3>Propostas da IA</h3>
+        <p>Cada sugestão vem com confiança, janela de validade e o intertravamento que precisa estar satisfeito. O ciclo é sempre o mesmo:</p>
+        <div class="chain">
+          <span class="is-state">gerar</span><span class="arrow">→</span>
+          <span class="is-state">aprovar</span><span class="arrow">|</span>
+          <span class="is-state">rejeitar</span><span class="arrow">|</span>
+          <span class="is-state">engavetar</span><span class="arrow">→</span>
+          <span class="is-state">executar</span>
+        </div>
+        <p>
+          Com nome e horário em cada etapa. Nenhum comando físico — cancela, semáforo, chamada de doca —
+          sai por decisão automática.
+        </p>
+        <div class="refuse">
+          <b>o sistema recusa</b>
+          Executar sugestão sem aprovação registrada: <code>ERR_YARD_COMMAND_AI_NOT_APPROVED</code>,
+          negado pelo banco e não pela boa vontade da tela.
+        </div>
+      </section>
+
+      <!-- ------------------------------------------------------------ 04 -->
+      <section id="erros">
+        <div class="eyebrow">04</div>
+        <h2>Como o sistema fala com você</h2>
+        <p class="section-note">
+          Erro aqui não é texto solto: o backend devolve <strong>código + parâmetros</strong> e a tela
+          traduz. Os mesmos códigos aparecem no log, no teste e na tela — o que o operador lê é o que o
+          suporte procura.
+        </p>
+        <div class="scroll-x">
+          <table>
+            <thead><tr><th>Código</th><th>O que aconteceu</th><th>O que fazer</th></tr></thead>
+            <tbody>
+              <tr><td><code>ERR_YARD_IDENTIFICATION_LOW_CONFIDENCE</code></td><td>Leitura abaixo do limite</td><td>Confirmar a placa manualmente</td></tr>
+              <tr><td><code>ERR_YARD_CHECKLIST_FAILED</code></td><td>Item bloqueante reprovado</td><td>Corrigir e reinspecionar</td></tr>
+              <tr><td><code>ERR_YARD_APPOINTMENT_STALE</code></td><td>Alguém alterou a janela antes</td><td>Recarregar e refazer a alteração</td></tr>
+              <tr><td><code>ERR_YARD_SLOT_OCCUPIED</code></td><td>Vaga já ocupada</td><td>Escolher outra vaga</td></tr>
+              <tr><td><code>ERR_YARD_SLOT_BLOCKED</code></td><td>Vaga ou doca bloqueada</td><td>Liberar o bloqueio ou escolher outra</td></tr>
+              <tr><td><code>ERR_YARD_MOVE_WRONG_SLOT</code></td><td>QR lido ≠ vaga esperada</td><td>Conferir a vaga; fica registrado como desvio</td></tr>
+              <tr><td><code>ERR_YARD_MOVE_CONFIRMATION_REQUIRED</code></td><td>Confirmação manual sem motivo</td><td>Informar a justificativa</td></tr>
+              <tr><td><code>ERR_YARD_DOCK_STAGE_INVALID</code></td><td>Etapa fora de ordem</td><td>Seguir a sequência da doca</td></tr>
+              <tr><td><code>ERR_YARD_WEIGHT_VEHICLE_MISPLACED</code></td><td>Veículo mal posicionado</td><td>Reposicionar e repetir a captura</td></tr>
+              <tr><td><code>ERR_YARD_TICKET_IMMUTABLE</code></td><td>Ticket fechado</td><td>Abrir nova pesagem</td></tr>
+              <tr><td><code>ERR_YARD_EXIT_BLOCKED_BY_PENDENCY</code></td><td>Pendência aberta</td><td>Resolver e pedir liberação</td></tr>
+              <tr><td><code>ERR_YARD_HOLD_SEGREGATION</code></td><td>Quem abriu tentou liberar</td><td>Outra pessoa libera</td></tr>
+              <tr><td><code>ERR_YARD_COMMAND_AI_NOT_APPROVED</code></td><td>Execução sem aprovação</td><td>Aprovar antes de executar</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:14px">
+          Datas, horas, números e pesos seguem o idioma escolhido. O banco guarda <strong>UTC</strong>;
+          a tela mostra no <strong>fuso da planta</strong> — turno que vira meia-noite não vira relatório errado.
+        </p>
+      </section>
+
+      <!-- ------------------------------------------------------------ 05 -->
+      <section id="invariantes">
+        <div class="eyebrow">05</div>
+        <h2>O que é garantido, mesmo contra o sistema</h2>
+        <p class="section-note">
+          Estas regras vivem no <strong>banco</strong> — CHECK, EXCLUDE, trigger. Valem para a tela, para
+          a API, para a integração e para o SQL digitado à mão às duas da manhã.
+        </p>
+        <ul class="locks">
+          <li><span class="mark">✓</span><span>Duas janelas não se sobrepõem na mesma doca.</span></li>
+          <li><span class="mark">✓</span><span>Duas visitas não ocupam a mesma vaga ao mesmo tempo, nem a mesma doca.</span></li>
+          <li><span class="mark">✓</span><span>Confirmação manual de manobra sem motivo não entra.</span></li>
+          <li><span class="mark">✓</span><span>Evento de trilha não se altera nem se apaga.</span></li>
+          <li><span class="mark">✓</span><span>Ticket de pesagem fechado não muda.</span></li>
+          <li><span class="mark">✓</span><span>Visita com pendência aberta não sai do pátio.</span></li>
+          <li><span class="mark">✓</span><span>Comando de IA não executa sem aprovação registrada.</span></li>
+        </ul>
+        <p>Cada uma tem um teste que <strong>tenta violá-la por SQL direto</strong> e exige que o banco recuse.</p>
+      </section>
+
+      <!-- ------------------------------------------------------------ 06 -->
+      <section id="verificacao">
+        <div class="eyebrow">06</div>
+        <h2>Verificação de ponta a ponta</h2>
+        <p class="section-note">
+          O roteiro percorre as nove etapas deste guia com a placa do exemplo — e em cada uma
+          <strong>tenta violar a regra</strong>, exigindo a recusa certa. Pode rodar quantas vezes quiser:
+          ele mesmo limpa o que deixou para trás.
+        </p>
+
+<pre>cd apps/api
+python scripts/e2e_demo.py --api http://127.0.0.1:8088 \
+       --plate AAA3251 --driver "Stéfano Motorista"
+
+<span class="pass">✓ fluxo completo: 12 etapas, nenhuma regra violada.</span></pre>
+
+        <div class="checks">
+          <div class="check"><div class="v num">80</div><div class="k">testes pytest, banco real</div></div>
+          <div class="check"><div class="v num">25</div><div class="k">verificações de interface</div></div>
+          <div class="check"><div class="v num">4 × 8</div><div class="k">aparelhos × telas, responsivo</div></div>
+          <div class="check"><div class="v num">2</div><div class="k">idiomas, sem chave faltando</div></div>
+        </div>
+
+<pre>cd apps/api &amp;&amp; python -m pytest -q                <span class="c"># banco real</span>
+cd apps/web &amp;&amp; node scripts/i18n-check.mjs       <span class="c"># chaves e literais em JSX</span>
+cd apps/web &amp;&amp; node scripts/responsive-check.mjs <span class="c"># 4 aparelhos × 8 telas</span>
+cd apps/web &amp;&amp; node scripts/smoke-ui.mjs         <span class="c"># interações reais</span></pre>
+      </section>
+
+      <footer>
+        Cada tela deste guia existe para transformar uma decisão de pátio em <strong>registro</strong>:
+        quem decidiu, quando, com base em quê — e o que o sistema recusou fazer no caminho.
+      </footer>
+    </main>
+  </div>
+</div>
+
+<script>
+  // Trilho de navegação acompanha a leitura. Sem biblioteca: uma seção por vez fica marcada.
+  (function () {
+    var links = Array.prototype.slice.call(document.querySelectorAll('.rail a'));
+    var sections = links
+      .map(function (a) { return document.querySelector(a.getAttribute('href')); })
+      .filter(Boolean);
+    if (!sections.length || !('IntersectionObserver' in window)) return;
+
+    function mark(id) {
+      links.forEach(function (a) {
+        a.setAttribute('aria-current', a.getAttribute('href') === '#' + id ? 'true' : 'false');
+      });
+    }
+    mark(sections[0].id);
+
+    var seen = new Map();
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) { seen.set(entry.target.id, entry.intersectionRatio); });
+      var best = null, bestRatio = 0;
+      seen.forEach(function (ratio, id) { if (ratio > bestRatio) { bestRatio = ratio; best = id; } });
+      if (best) mark(best);
+    }, { rootMargin: '-10% 0px -55% 0px', threshold: [0, 0.2, 0.5, 1] });
+
+    sections.forEach(function (section) { observer.observe(section); });
+  })();
+</script>

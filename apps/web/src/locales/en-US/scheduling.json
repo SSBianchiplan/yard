@@ -1,0 +1,95 @@
+{
+  "title": "Scheduling",
+  "subtitle": "Dock windows · finite capacity",
+  "timeline": {
+    "dock": "Dock",
+    "empty": "No dock matches the filter",
+    "blocked": "Blocked",
+    "legendConflict": "Conflict",
+    "dragHint": "Drag a window to reschedule; conflicts show before you drop",
+    "now": "now"
+  },
+  "state": {
+    "draft": "Draft",
+    "requested": "Requested",
+    "confirmed": "Confirmed",
+    "checked_in": "Checked in",
+    "in_progress": "In progress",
+    "completed": "Completed",
+    "cancelled": "Cancelled",
+    "no_show": "No-show",
+    "rescheduled": "Rescheduled"
+  },
+  "channel": {
+    "internal": "Internal",
+    "portal": "Portal",
+    "api": "API"
+  },
+  "priority": {
+    "PERISHABLE": "Perishable",
+    "CROSS_DOCK": "Cross-dock",
+    "PRODUCTION_FIRM": "Firm production order",
+    "HAZMAT_WINDOW": "Hazardous goods",
+    "DEDICATED_FLEET": "Dedicated fleet",
+    "PORTAL_STANDARD": "Portal standard",
+    "none": "No priority"
+  },
+  "column": {
+    "reference": "Appointment",
+    "dock": "Dock",
+    "plate": "Plate",
+    "carrier": "Carrier",
+    "operation": "Operation",
+    "window": "Window",
+    "state": "State",
+    "priority": "Priority",
+    "channel": "Channel",
+    "slot": "Reserved slot"
+  },
+  "form": {
+    "title": "New window",
+    "dock": "Dock",
+    "plate": "Plate",
+    "operation": "Operation type",
+    "product": "Product",
+    "resource": "Unloading resource",
+    "startsAt": "Start",
+    "endsAt": "End",
+    "submit": "Request window",
+    "confirm": "Confirm and reserve slot",
+    "success": "Window {{reference}} created",
+    "createdHint": "Window created as requested. Confirming reserves the slot.",
+    "availability": "Free windows on this dock",
+    "duration": "Duration (min)",
+    "endsAtHint": "Ends at {{time}}"
+  },
+  "reschedule": {
+    "title": "Reschedule",
+    "reason": "Reason",
+    "reasonPlaceholder": "Reason code (e.g. PLANT_DELAY)",
+    "submit": "Reschedule",
+    "impact": "Impact: {{count}} appointments displaced, {{minutes}} min of projected delay",
+    "noImpact": "No impact on other windows"
+  },
+  "cancel": {
+    "title": "Cancel window",
+    "submit": "Cancel window"
+  },
+  "history": {
+    "title": "Change trail",
+    "empty": "No changes"
+  },
+  "kpi": {
+    "confirmedToday": "Confirmed today",
+    "adherence": "Appointment adherence",
+    "noShow": "No-show",
+    "rescheduleRate": "Reschedule rate",
+    "windowUsage": "Windows in use"
+  },
+  "empty": "No window in this period",
+  "footer": "{{count}} windows",
+  "noShow": "Mark as no-show",
+  "detail": {
+    "noSlot": "Not reserved yet"
+  }
+}

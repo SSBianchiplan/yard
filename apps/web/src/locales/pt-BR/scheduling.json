@@ -1,0 +1,95 @@
+{
+  "title": "Agendamento",
+  "subtitle": "Janelas de doca · capacidade finita",
+  "timeline": {
+    "dock": "Doca",
+    "empty": "Nenhuma doca no filtro",
+    "blocked": "Bloqueada",
+    "legendConflict": "Conflito",
+    "dragHint": "Arraste a janela para reprogramar; o conflito aparece antes de soltar",
+    "now": "agora"
+  },
+  "state": {
+    "draft": "Rascunho",
+    "requested": "Solicitado",
+    "confirmed": "Confirmado",
+    "checked_in": "Chegou",
+    "in_progress": "Em operação",
+    "completed": "Concluído",
+    "cancelled": "Cancelado",
+    "no_show": "Não compareceu",
+    "rescheduled": "Reprogramado"
+  },
+  "channel": {
+    "internal": "Interno",
+    "portal": "Portal",
+    "api": "API"
+  },
+  "priority": {
+    "PERISHABLE": "Perecível",
+    "CROSS_DOCK": "Cross-dock",
+    "PRODUCTION_FIRM": "Produção firme",
+    "HAZMAT_WINDOW": "Produto perigoso",
+    "DEDICATED_FLEET": "Frota cativa",
+    "PORTAL_STANDARD": "Portal padrão",
+    "none": "Sem prioridade"
+  },
+  "column": {
+    "reference": "Agendamento",
+    "dock": "Doca",
+    "plate": "Placa",
+    "carrier": "Transportadora",
+    "operation": "Operação",
+    "window": "Janela",
+    "state": "Estado",
+    "priority": "Prioridade",
+    "channel": "Canal",
+    "slot": "Vaga reservada"
+  },
+  "form": {
+    "title": "Nova janela",
+    "dock": "Doca",
+    "plate": "Placa",
+    "operation": "Tipo de operação",
+    "product": "Produto",
+    "resource": "Recurso de descarga",
+    "startsAt": "Início",
+    "endsAt": "Fim",
+    "submit": "Solicitar janela",
+    "confirm": "Confirmar e reservar vaga",
+    "success": "Janela {{reference}} criada",
+    "createdHint": "Janela criada como solicitada. Confirmar reserva a vaga.",
+    "availability": "Janelas livres nesta doca",
+    "duration": "Duração (min)",
+    "endsAtHint": "Termina às {{time}}"
+  },
+  "reschedule": {
+    "title": "Reprogramar",
+    "reason": "Motivo",
+    "reasonPlaceholder": "Código do motivo (ex.: PLANT_DELAY)",
+    "submit": "Reprogramar",
+    "impact": "Impacto: {{count}} agendamentos deslocados, {{minutes}} min de atraso projetado",
+    "noImpact": "Sem impacto em outras janelas"
+  },
+  "cancel": {
+    "title": "Cancelar janela",
+    "submit": "Cancelar janela"
+  },
+  "history": {
+    "title": "Rastro de mudanças",
+    "empty": "Sem alterações"
+  },
+  "kpi": {
+    "confirmedToday": "Confirmados hoje",
+    "adherence": "Aderência ao agendamento",
+    "noShow": "Não compareceu",
+    "rescheduleRate": "Taxa de reprogramação",
+    "windowUsage": "Janelas ocupadas"
+  },
+  "empty": "Nenhuma janela no período",
+  "footer": "{{count}} janelas",
+  "noShow": "Marcar não comparecimento",
+  "detail": {
+    "noSlot": "Ainda não reservada"
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "checkin": {
+    "title": "Vehicle gate-in",
+    "subtitle": "Gatehouse · manual entry",
+    "field": {
+      "plate": "Plate",
+      "driverDocument": "Driver document",
+      "operationType": "Operation type",
+      "product": "Product",
+      "gate": "Gatehouse",
+      "documentNumber": "NF-e / CT-e",
+      "sealNumber": "Seal",
+      "notes": "Notes"
+    },
+    "placeholder": {
+      "plate": "ABC1D23",
+      "driverDocument": "CPF, digits only",
+      "select": "Select",
+      "optional": "Optional"
+    },
+    "hint": {
+      "documentNumber": "Fiscal document key or number",
+      "plate": "LPR capture lands in Slice 4; this is the exception path"
+    },
+    "submit": "Register gate-in",
+    "success": "Gate-in registered: {{reference}}"
+  },
+  "queue": {
+    "title": "Gatehouse queue",
+    "empty": "No vehicle waiting for screening",
+    "waiting": "waiting for {{duration}}"
+  },
+  "yard": {
+    "title": "In yard",
+    "empty": "Yard is empty"
+  },
+  "action": {
+    "release": "Release to yard",
+    "gateOut": "Register gate-out",
+    "dock": "Send to dock"
+  },
+  "kiosk": {
+    "title": "Gatehouse kiosk",
+    "subtitle": "Identify · check · release",
+    "step": "Step",
+    "of": "of",
+    "next": "Next",
+    "release": "Open barrier",
+    "step1": "Identify vehicle",
+    "step1Hint": "LPR, appointment QR, RFID or exception keying",
+    "step2": "Entry checklist",
+    "step2Hint": "A failed blocking item stops the release",
+    "step3": "Open barrier",
+    "step3Hint": "The command only goes out with the PLC permissive",
+    "method": "Method",
+    "value": "Reading",
+    "valueHint": "Plate, appointment reference or TAG",
+    "confidence": "Reading confidence",
+    "confidenceHint": "Below 0.85 goes to human review",
+    "identify": "Identify",
+    "visit": "Visit at the gatehouse",
+    "submitChecklist": "Submit checklist",
+    "device": "Barrier: {{code}}",
+    "noDevice": "No barrier available",
+    "permissiveNote": "The system does not replace a safety function: the PLC has the final word"
+  },
+  "method": {
+    "lpr": "LPR",
+    "qr": "QR",
+    "rfid": "RFID",
+    "badge": "Badge",
+    "manual": "Keyed in",
+    "whatsapp": "WhatsApp"
+  },
+  "decision": {
+    "admit": "Admitted",
+    "queue": "Waiting queue",
+    "reject": "Rejected"
+  },
+  "severity": {
+    "blocking": "Blocking",
+    "warning": "Warning",
+    "info": "Info"
+  },
+  "command": {
+    "requested": "Requested",
+    "permitted": "Permitted",
+    "sent": "Sent",
+    "acknowledged": "Acknowledged by field",
+    "failed": "Failed",
+    "denied_by_plc": "Denied by PLC",
+    "timeout": "No answer"
+  },
+  "checklist": {
+    "blocked": "Failed items: {{items}}",
+    "pass": "Pass",
+    "fail": "Fail",
+    "pending": "{{count}} item(s) not checked yet",
+    "selectVisit": "Pick the visit waiting at the gatehouse"
+  },
+  "identifications": {
+    "title": "Recent identifications"
+  },
+  "item": {
+    "EPI_COMPLETE": "PPE complete",
+    "FIRE_EXTINGUISHER": "Valid fire extinguisher",
+    "CARGO_SECURED": "Cargo secured",
+    "SEAL_INTACT": "Seal intact",
+    "TIRE_CONDITION": "Tyre condition",
+    "DRIVER_BRIEFING": "Driver briefing",
+    "HAZMAT_PLACARD": "Hazardous goods placard",
+    "HAZMAT_KIT": "Emergency kit",
+    "LEAK_INSPECTION": "Leak inspection",
+    "HAZMAT_DOCUMENTATION": "Hazardous goods documentation"
+  }
+}

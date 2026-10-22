@@ -1,0 +1,14 @@
+{
+  "name": "gplansis-yard",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": ["apps/web", "packages/ds"],
+  "scripts": {
+    "dev": "npm run dev --workspace @gplansis/web",
+    "build": "npm run build --workspace @gplansis/web",
+    "storybook": "npm run storybook --workspace @gplansis/ds",
+    "i18n:check": "npm run i18n:check --workspace @gplansis/web",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspace @gplansis/web"
+  }
+}

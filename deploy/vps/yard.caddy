@@ -1,0 +1,44 @@
+# =============================================================================
+#  GPlanSiS|YARD — yard.gplansis.com
+#  Importado pelo /etc/caddy/Caddyfile. Bloco próprio por nome: não toca em
+#  nenhum outro site do hub.
+#
+#  API, WebSocket da torre, SSE e portal vão para o uvicorn (127.0.0.1:8990).
+#  O resto é a SPA estática em /opt/yard/web, com fallback para index.html.
+#
+#  O arquivo de log precisa existir com dono caddy:caddy ANTES do reload —
+#  senão "permission denied" e o Caddy fica na configuração anterior.
+# =============================================================================
+
+yard.gplansis.com {
+	import seguranca_hub
+	encode zstd gzip
+
+	@api path /api/* /ws/* /sse/* /portal/* /health /ready
+	handle @api {
+		reverse_proxy 127.0.0.1:8990 {
+			header_up X-Forwarded-Proto https
+		}
+	}
+
+	handle {
+		root * /opt/yard/web
+		# Asset com hash no nome é imutável; todo o resto (index.html, sw.js,
+		# manifesto e rotas da SPA) revalida — senão o celular fica preso na
+		# versão antiga do app.
+		@immutable path /assets/*
+		header @immutable Cache-Control "public, max-age=31536000, immutable"
+		@fresh not path /assets/*
+		header @fresh Cache-Control "no-cache"
+		# o Caddy não conhece .webmanifest; sem o tipo certo o navegador não instala
+		@manifest path /manifest.webmanifest
+		header @manifest Content-Type "application/manifest+json"
+		header Content-Security-Policy "default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; connect-src 'self' wss://yard.gplansis.com; manifest-src 'self'; worker-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'"
+		try_files {path} /index.html
+		file_server
+	}
+
+	log {
+		output file /var/log/caddy/yard.log
+	}
+}

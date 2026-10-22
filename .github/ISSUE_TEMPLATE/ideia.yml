@@ -1,0 +1,27 @@
+name: 💡 Ideia
+description: Sugira uma funcionalidade ou melhoria
+labels: ["ideia"]
+body:
+  - type: textarea
+    id: problema
+    attributes:
+      label: Qual problema isso resolve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposta
+    attributes:
+      label: Proposta
+      description: Como você imagina a solução (telas, regras de pátio, integrações, campo…)?
+    validations:
+      required: true
+  - type: textarea
+    id: alternativas
+    attributes:
+      label: Alternativas consideradas
+  - type: checkboxes
+    id: ajuda
+    attributes:
+      label: Contribuição
+      options:
+        - label: Quero ajudar a implementar

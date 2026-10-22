@@ -1,0 +1,55 @@
+{
+  "title": "Torre de controle",
+  "interlock": "A IA propõe; o humano decide. Comando físico só depois da aprovação registrada.",
+  "proposals": "Propostas do agente",
+  "noProposals": "Nenhuma proposta ativa",
+  "alarms": "Gargalos",
+  "noAlarms": "Sem gargalos abertos",
+  "actor": "Decisor",
+  "expiresAt": "Expira às {{time}}",
+  "confidence": "confiança {{value}}",
+  "approvedBy": "Aprovado por {{actor}}",
+  "acknowledgedBy": "reconhecido por",
+  "threshold": "{{value}} · limite {{threshold}}",
+  "kind": {
+    "dock_resequence": "Resequenciar doca",
+    "slot_reassign": "Remanejar vaga",
+    "queue_priority": "Priorizar fila",
+    "dwell_alert": "Dwell excessivo",
+    "release_forecast": "Previsão de liberação",
+    "gate_command": "Comando de portaria"
+  },
+  "impact": {
+    "visits_affected": "Visitas afetadas",
+    "minutes_over_target": "Minutos acima da meta",
+    "demurrage_risk": "Risco de demurrage",
+    "displaced_appointments": "Agendamentos deslocados",
+    "delayed_minutes": "Minutos de atraso",
+    "conflicting_references": "Conflitos",
+    "distance_saved_m": "Metros economizados"
+  },
+  "metric": {
+    "gate_queue": "Fila de portaria acima do limite",
+    "over_dwell": "Dwell acima da meta",
+    "demurrage_risk": "Risco de demurrage",
+    "late_appointments": "Agendamentos atrasados"
+  },
+  "action": {
+    "generate": "Rodar agente",
+    "approve": "Aprovar",
+    "reject": "Rejeitar",
+    "execute": "Executar",
+    "acknowledge": "Reconhecer",
+    "shelve": "Suprimir"
+  },
+  "kpi": {
+    "gateQueue": "Fila de portaria",
+    "inYard": "Em pátio",
+    "overDwell": "Dwell acima da meta",
+    "demurrageRisk": "Risco de demurrage",
+    "docks": "Docas ocupadas",
+    "lateAppointments": "Agendamentos atrasados",
+    "openMoves": "Manobras abertas",
+    "openHolds": "Pendências abertas"
+  }
+}

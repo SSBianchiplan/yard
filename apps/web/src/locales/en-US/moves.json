@@ -1,0 +1,52 @@
+{
+  "title": "Yard moves",
+  "subtitle": "Spotter queue · sequenced by move cost",
+  "queue": "Task queue",
+  "task": "Task",
+  "spotter": "Spotter",
+  "empty": "No task in the queue",
+  "selectTask": "Pick a task from the queue",
+  "scan": "Slot QR",
+  "scanHint": "Confirmation is a scan, not a button",
+  "deviations": "Recent deviations",
+  "deviation": "Wrong slot",
+  "noDeviations": "No deviations",
+  "state": {
+    "proposed": "Proposed", "queued": "Queued", "assigned": "Assigned",
+    "accepted": "Accepted", "in_progress": "In progress", "confirmed": "Confirmed",
+    "cancelled": "Cancelled", "failed": "Failed"
+  },
+  "column": {
+    "route": "From → to", "cost": "Cost", "distance": "Distance",
+    "state": "State", "sla": "SLA"
+  },
+  "action": {
+    "accept": "Accept task", "start": "Start move",
+    "confirmScan": "Confirm by scan", "confirmManual": "Confirm manually"
+  },
+  "manual": {
+    "title": "Manual confirmation (exception)",
+    "reason": "Reason",
+    "hint": "Counts in the manual exception KPI"
+  },
+  "dock": {
+    "title": "Dock operation",
+    "stage": {
+      "arrived": "Arrived", "docked": "Docked", "started": "Started",
+      "paused": "Paused", "finished": "Finished", "released": "Released",
+      "scheduled": "Scheduled"
+    },
+    "pauseReason": "Pause reason",
+    "discrepancy": "Discrepancy",
+    "evidence": "Photo evidence",
+    "hold": "Hold",
+    "holdOpen": "Open hold",
+    "holdRelease": "Release hold"
+  },
+  "kpi": {
+    "movesPerSpotter": "Moves per spotter",
+    "queueTime": "Queue time",
+    "scanShare": "Scan-confirmed moves",
+    "deviations": "Deviations detected"
+  }
+}

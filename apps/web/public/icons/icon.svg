@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="GPlanSiS YARD">
+  <rect width="512" height="512" rx="112" fill="#13304d"/>
+  <g fill="#f28c28">
+    <rect x="96" y="84" width="64" height="58" rx="10"/>
+    <rect x="176" y="84" width="64" height="58" rx="10"/>
+    <rect x="272" y="84" width="64" height="58" rx="10"/>
+    <rect x="352" y="84" width="64" height="58" rx="10"/>
+  </g>
+  <path d="M152 196 L256 300 L360 196 M256 300 L256 436" fill="none" stroke="#ffffff" stroke-width="72" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M256 322 L256 420" fill="none" stroke="#13304d" stroke-width="10" stroke-linecap="round" stroke-dasharray="22 20"/>
+</svg>

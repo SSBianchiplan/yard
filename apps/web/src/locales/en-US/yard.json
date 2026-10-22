@@ -1,0 +1,155 @@
+{
+  "controlTower": {
+    "title": "Control tower",
+    "subtitle": "Live yard",
+    "mapTitle": "Yard map",
+    "queueTitle": "Queue and yard",
+    "updatedAt": "Updated at {{time}}"
+  },
+  "map": {
+    "legend": {
+      "free": "Free",
+      "occupied": "Occupied",
+      "over": "Dwell over target",
+      "blocked": "Blocked"
+    },
+    "slot": "Slot",
+    "dock": "Dock",
+    "gate": "Gatehouse",
+    "scale": "Weighbridge",
+    "selectedSlot": "Slot {{code}}",
+    "emptySelection": "Click a slot to inspect the vehicle",
+    "fit": "Fit",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out"
+  },
+  "kpi": {
+    "vehiclesInYard": "Vehicles in yard",
+    "atGateIn": "At gatehouse",
+    "atDock": "At dock",
+    "slotOccupancy": "Slot occupancy",
+    "dockOccupancy": "Dock occupancy",
+    "gateInToday": "Gate-ins today",
+    "gateOutToday": "Gate-outs today",
+    "avgDwell": "Average dwell (today)",
+    "p95Dwell": "Dwell p95 (today)",
+    "overTargetDwell": "Dwell over target",
+    "manualEventRate": "Keyed-in events (24h)",
+    "footer": {
+      "ofTotal": "{{used}} of {{total}}",
+      "target": "target {{value}}",
+      "automaticShare": "{{value}} automatic"
+    },
+    "detail": {
+      "current": "Current value",
+      "behind": "{{count}} vehicle(s) behind this number — click to open",
+      "inYard": "Parked in a slot",
+      "blocked": "With an open hold",
+      "avgDwell": "Average dwell (today)",
+      "worstDwell": "Longest dwell right now",
+      "openVisits": "Open visits",
+      "gateInToday": "Gate-ins today",
+      "gateOutToday": "Gate-outs today",
+      "slotsOccupied": "Slots occupied",
+      "slotsFree": "Slots free",
+      "slotsBlocked": "Slots blocked",
+      "slotsTotal": "Slots in the yard",
+      "docksOccupied": "Docks occupied",
+      "docksFree": "Docks free",
+      "docksBlocked": "Docks blocked",
+      "docksTotal": "Docks in the plant",
+      "manualShare": "Keyed in by a person",
+      "automaticShare": "Captured from the field",
+      "how": {
+        "vehiclesInYard": "Visits inside the plant: in a slot or at a dock",
+        "atGateIn": "Visits that entered and are not released to the yard yet",
+        "atDock": "Visits docked right now",
+        "slotOccupancy": "Slots with an open occupancy ÷ slots in the yard",
+        "dockOccupancy": "Docks occupied ÷ docks in the plant",
+        "p95Dwell": "95% of today's visits stayed less than this",
+        "overTargetDwell": "Visits above their own operation's dwell target",
+        "manualEventRate": "Keyed events ÷ events in the last 24 h"
+      }
+    }
+  },
+  "visit": {
+    "title": "Visits",
+    "empty": "No visit matches the current filter",
+    "footer": "{{count}} visits",
+    "onlyOpen": "In yard only",
+    "searchPlaceholder": "Plate or reference",
+    "column": {
+      "reference": "Visit",
+      "plate": "Plate",
+      "driver": "Driver",
+      "carrier": "Carrier",
+      "product": "Product",
+      "operation": "Operation",
+      "state": "State",
+      "slot": "Slot",
+      "dock": "Dock",
+      "arrived": "Arrival",
+      "gateIn": "Gate-in",
+      "gateOut": "Gate-out",
+      "dwell": "Dwell",
+      "document": "Document"
+    },
+    "state": {
+      "expected": "Announced",
+      "at_gate_in": "At gatehouse",
+      "in_yard": "In yard",
+      "at_dock": "At dock",
+      "at_gate_out": "Leaving",
+      "departed": "Departed",
+      "rejected": "Rejected"
+    },
+    "action": {
+      "assignSlotAuto": "Release to yard",
+      "assignSlot": "Assign slot",
+      "assignDock": "Send to dock",
+      "gateOut": "Register gate-out",
+      "detail": "Details"
+    },
+    "blocked": "Exit blocked: {{reason}}",
+    "events": "Event trail",
+    "eventSource": {
+      "manual": "keyed in",
+      "device": "device",
+      "simulator": "simulator",
+      "system": "system",
+      "ai_confirmed": "AI confirmed"
+    }
+  },
+  "operation": {
+    "RECEBIMENTO_GRANEL": "Bulk receiving",
+    "RECEBIMENTO_PALETIZADO": "Palletized receiving",
+    "EXPEDICAO_GRANEL": "Bulk shipping",
+    "EXPEDICAO_PALETIZADA": "Palletized shipping",
+    "DEVOLUCAO": "Return",
+    "TRANSFERENCIA": "Transfer"
+  },
+  "direction": {
+    "inbound": "Inbound",
+    "outbound": "Outbound",
+    "transit": "Transit"
+  },
+  "dataQuality": {
+    "fresh": "fresh",
+    "stale": "stale",
+    "invalid": "invalid",
+    "no_comm": "no comms"
+  },
+  "detail": {
+    "subtitle": "{{operation}} · position {{position}}",
+    "target": "Dwell target",
+    "createMove": "Create move task",
+    "sendToDock": "Send to dock",
+    "startWeighing": "Open weighing",
+    "goToWeighing": "Go to weighing",
+    "ticketOpen": "Ticket {{reference}} already open",
+    "targetSlot": "Target: slot",
+    "targetDock": "Target: dock",
+    "open": "Open",
+    "openActions": "Visit actions"
+  }
+}

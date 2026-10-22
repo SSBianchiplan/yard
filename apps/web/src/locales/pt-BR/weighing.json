@@ -1,0 +1,67 @@
+{
+  "title": "Balança",
+  "subtitle": "Bruto · tara · líquido, com imagem e hash",
+  "console": "Console de pesagem",
+  "tickets": "Tickets",
+  "empty": "Nenhum ticket",
+  "divergenceBlocks": "Divergência de {{value}} contra o documento fiscal: saída bloqueada",
+  "field": {
+    "scale": "Balança",
+    "visit": "Visita",
+    "visitPlaceholder": "YRD-2026-000123",
+    "documentNet": "Líquido da NF-e (kg)",
+    "documentNetHint": "Usado na conferência peso × documento fiscal"
+  },
+  "reading": {
+    "stable": "Estável",
+    "unstable": "Instável",
+    "noComm": "Sem comunicação"
+  },
+  "action": {
+    "open": "Abrir ticket",
+    "captureGross": "Capturar bruto",
+    "captureTare": "Capturar tara",
+    "close": "Fechar ticket",
+    "reprint": "Reimprimir"
+  },
+  "manual": {
+    "title": "Pesagem manual (exceção)",
+    "weight": "Peso digitado (kg)",
+    "reason": "Motivo",
+    "secondFactor": "Segundo fator (usuário autorizado)",
+    "hint": "Exige motivo e um segundo humano; entra no KPI de exceção manual"
+  },
+  "state": {
+    "open": "Aberto",
+    "first_weight": "1ª pesagem",
+    "second_weight": "2ª pesagem",
+    "closed": "Fechado",
+    "cancelled": "Cancelado"
+  },
+  "source": {
+    "device": "Dispositivo",
+    "manual": "Digitado",
+    "simulator": "Simulador"
+  },
+  "tareSource": {
+    "registered": "cadastral",
+    "measured": "aferida"
+  },
+  "column": {
+    "reference": "Ticket",
+    "state": "Estado",
+    "gross": "Bruto",
+    "tare": "Tara",
+    "net": "Líquido",
+    "divergence": "Divergência",
+    "source": "Origem",
+    "hash": "Hash"
+  },
+  "kpi": {
+    "divergenceAvg": "Divergência média",
+    "manualShare": "Pesagens manuais",
+    "ticketsToday": "Tickets hoje",
+    "reprints": "Reimpressões"
+  },
+  "linkedVisit": "Visita {{visit}} · placa {{plate}} · documento {{document}}"
+}

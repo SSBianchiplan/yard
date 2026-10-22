@@ -1,0 +1,52 @@
+{
+  "title": "Movimentação",
+  "subtitle": "Fila do manobrista · sequenciada por custo de movimento",
+  "queue": "Fila de tarefas",
+  "task": "Tarefa",
+  "spotter": "Manobrista",
+  "empty": "Nenhuma tarefa na fila",
+  "selectTask": "Selecione uma tarefa da fila",
+  "scan": "QR da vaga",
+  "scanHint": "Confirmação é leitura, não botão",
+  "deviations": "Desvios recentes",
+  "deviation": "Vaga divergente",
+  "noDeviations": "Sem desvios",
+  "state": {
+    "proposed": "Proposta", "queued": "Na fila", "assigned": "Atribuída",
+    "accepted": "Aceita", "in_progress": "Em execução", "confirmed": "Confirmada",
+    "cancelled": "Cancelada", "failed": "Falhou"
+  },
+  "column": {
+    "route": "Origem → destino", "cost": "Custo", "distance": "Distância",
+    "state": "Estado", "sla": "SLA"
+  },
+  "action": {
+    "accept": "Aceitar tarefa", "start": "Iniciar manobra",
+    "confirmScan": "Confirmar por leitura", "confirmManual": "Confirmar manualmente"
+  },
+  "manual": {
+    "title": "Confirmação manual (exceção)",
+    "reason": "Motivo",
+    "hint": "Entra no KPI de exceção manual"
+  },
+  "dock": {
+    "title": "Operação de doca",
+    "stage": {
+      "arrived": "Chegada", "docked": "Encostado", "started": "Início",
+      "paused": "Pausado", "finished": "Fim", "released": "Liberado",
+      "scheduled": "Programado"
+    },
+    "pauseReason": "Motivo da pausa",
+    "discrepancy": "Divergência",
+    "evidence": "Evidência fotográfica",
+    "hold": "Pendência",
+    "holdOpen": "Abrir pendência",
+    "holdRelease": "Liberar pendência"
+  },
+  "kpi": {
+    "movesPerSpotter": "Movimentos por manobrista",
+    "queueTime": "Tempo em fila",
+    "scanShare": "Confirmação por leitura",
+    "deviations": "Desvios detectados"
+  }
+}

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 🔒 Falha de segurança
+    url: https://github.com/SSBianchiplan/yard/blob/main/SECURITY.md
+    about: Não abra issue pública — siga a política de segurança (contato@gplansis.com).
+  - name: 🌐 GPlanSiS|YARD no ar
+    url: https://yard.gplansis.com
+    about: Abra o sistema em produção.

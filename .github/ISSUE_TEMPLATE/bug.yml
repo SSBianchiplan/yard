@@ -1,0 +1,31 @@
+name: 🐞 Bug
+description: Algo não funciona como deveria
+labels: ["bug"]
+body:
+  - type: textarea
+    id: o-que
+    attributes:
+      label: O que aconteceu
+      description: Descreva o problema e o que você esperava que acontecesse.
+    validations:
+      required: true
+  - type: textarea
+    id: passos
+    attributes:
+      label: Passos para reproduzir
+      placeholder: |
+        1. Abrir…
+        2. Clicar em…
+        3. Ver o erro…
+    validations:
+      required: true
+  - type: input
+    id: ambiente
+    attributes:
+      label: Ambiente
+      placeholder: "Ex.: yard.gplansis.com / local, Chrome 130, Windows 11, tablet do totem"
+  - type: textarea
+    id: extras
+    attributes:
+      label: Capturas, arquivos ou logs
+      description: Não anexe dados confidenciais, senhas ou chaves.

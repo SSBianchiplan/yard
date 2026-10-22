@@ -1,0 +1,56 @@
+# Segredos — nunca versionar (só os modelos .env.example / .env.production.example)
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Dependências e builds
+node_modules/
+dist/
+build/
+storybook-static/
+*.tsbuildinfo
+*.egg-info/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Dados, dumps e backups
+*.db
+*.sqlite
+*.sqlite3
+*.dump
+*.bak
+*.bak*
+*-bak-*
+backups/
+
+# Capturas geradas pelos scripts de verificação
+apps/web/screenshots/
+apps/web/shots/
+test-results/
+playwright-report/
+
+# Logs e temporários
+*.log
+*.tmp
+tmp/
+
+# Chaves e certificados
+*.pem
+*.key
+*.crt
+*.p12
+
+# SO / editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp

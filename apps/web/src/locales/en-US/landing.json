@@ -1,0 +1,231 @@
+{
+  "meta": {
+    "brand": "GPlanSiS | YARD",
+    "tagline": "Industrial Yard Management"
+  },
+  "nav": {
+    "features": "Features",
+    "twin": "Digital twin",
+    "food": "Food",
+    "security": "Security",
+    "faq": "FAQ",
+    "login": "Sign in",
+    "demo": "Book a demo",
+    "language": "Language"
+  },
+  "hero": {
+    "eyebrow": "Yard Operating System · digital twin of the yard",
+    "title": "From gate to dock, your yard running in real time.",
+    "lead": "GPlanSiS | YARD orchestrates gate, scheduling, weighbridge, spotting and docks in one live control tower — and shows where the plant loses hours before it turns into a queue on the street.",
+    "primary": "Open the system",
+    "secondary": "Talk to a specialist",
+    "note": "Live demo with a simulated food plant",
+    "scroll": "Scroll to tour the yard"
+  },
+  "kpi": {
+    "modules": {
+      "value": "8",
+      "label": "modules in one platform"
+    },
+    "kpis": {
+      "value": "11",
+      "label": "live KPIs in the tower"
+    },
+    "trail": {
+      "value": "100",
+      "suffix": "%",
+      "label": "of actions with an audit trail"
+    },
+    "ai": {
+      "value": "0",
+      "label": "AI commands without human approval"
+    }
+  },
+  "label": {
+    "gate": "Gate · LPR",
+    "scale": "Weighbridge",
+    "yard": "Yard",
+    "cold": "Cold chain",
+    "docks": "Docks",
+    "tower": "Control tower",
+    "live": "live"
+  },
+  "chapter": {
+    "gate": {
+      "kicker": "01 · Automated gate",
+      "title": "The barrier opens on data, not on shouting.",
+      "text": "LPR, appointment QR and RFID identify the vehicle; license, checklist and fiscal document are checked at screening. The barrier only opens with a PLC permissive and a recorded authorizer.",
+      "b1": "Plate reading with minimum confidence",
+      "b2": "A checklist that really blocks",
+      "b3": "Self-service kiosk for the driver"
+    },
+    "scale": {
+      "kicker": "02 · Integrated weighbridge",
+      "title": "Stable weight captured, immutable ticket.",
+      "text": "Toledo and Filizola indicators over serial or TCP, gross and tare with a stability window, divergence against the invoice and re-entry anti-fraud.",
+      "b1": "Net weight computed, never typed",
+      "b2": "Manual weighing needs a second factor",
+      "b3": "Divergence becomes an audited hold"
+    },
+    "yard": {
+      "kicker": "03 · Yard and spotting",
+      "title": "Every slot knows who is in it — and for how long.",
+      "text": "Live map with dwell per vehicle, spotting queue ordered by move cost and confirmation by scan at the slot. Cold chain and quarantine are slot types, not spreadsheet notes.",
+      "b1": "Dwell over target becomes a colored exception",
+      "b2": "Spotters get the task on their phone",
+      "b3": "Slots with power for reefer trailers"
+    },
+    "docks": {
+      "kicker": "04 · Scheduling and docks",
+      "title": "Dock windows with finite capacity, no spreadsheets.",
+      "text": "Dock Gantt with drag to reschedule, conflicts caught before the drop, carrier portal and timing of docking, start, finish and release.",
+      "b1": "Priority as a rule, not a favor",
+      "b2": "Portal for carriers to book themselves",
+      "b3": "Dock time measured stage by stage"
+    },
+    "tower": {
+      "kicker": "05 · Control tower + AI",
+      "title": "AI proposes. Your team decides.",
+      "text": "Bottlenecks detected with estimated impact, proposals with an expiry and mandatory human approval. ISA-18.2 alarms and 11 KPIs updated live.",
+      "b1": "No approval, no execution",
+      "b2": "Alarms with priority and acknowledgment",
+      "b3": "Color only when something is wrong (ISA-101)"
+    },
+    "twin": {
+      "kicker": "Digital twin",
+      "title": "The whole yard on one screen — and in the spotter's pocket.",
+      "text": "Field integrated over MQTT Sparkplug B and OPC UA, data quality always visible and degraded operation when the network drops. The same yard on the tower wall, the gate tablet and the phone.",
+      "cta": "See the live tower"
+    }
+  },
+  "problem": {
+    "kicker": "The problem",
+    "title": "The yard is where the plant loses hours nobody sees.",
+    "p1": "Trucks waiting on the street while the gate looks for the invoice.",
+    "p2": "Idle docks in the morning and queues in the afternoon, because scheduling lives in a spreadsheet.",
+    "p3": "Weights typed by hand, divergence found only at billing.",
+    "p4": "Spotters looking for the trailer over the radio.",
+    "answer": "YARD turns each of these moments into an event with an owner, a deadline and a trail."
+  },
+  "features": {
+    "kicker": "Features",
+    "title": "Everything that happens between the gate and the dock.",
+    "gate": {
+      "title": "Automated gate",
+      "text": "LPR, QR and RFID, screening with checklist, driver kiosk and barrier with permissive."
+    },
+    "scheduling": {
+      "title": "Scheduling",
+      "text": "Dock windows with finite capacity, configurable priority and carrier portal."
+    },
+    "weighing": {
+      "title": "Weighbridge",
+      "text": "Derived gross, tare and net, anti-fraud, divergence × invoice and immutable ticket."
+    },
+    "moves": {
+      "title": "Spotting",
+      "text": "Queue by move cost, acceptance on the phone and confirmation by scan at the slot."
+    },
+    "docks": {
+      "title": "Docks",
+      "text": "Timing from docking to release, holds and segregation of who releases."
+    },
+    "iot": {
+      "title": "IoT / OT",
+      "text": "MQTT Sparkplug B, OPC UA, device health and degraded operation."
+    },
+    "tower": {
+      "title": "Tower + AI",
+      "text": "Live KPIs, ISA-18.2 alarms and AI proposals with human approval."
+    },
+    "integrations": {
+      "title": "Integrations",
+      "text": "Transactional outbox for ERP, validated invoices and notifications with opt-out."
+    }
+  },
+  "food": {
+    "kicker": "Ready for food",
+    "title": "Cold chain, sanitary quarantine and bulk in one flow.",
+    "text": "The demo runs a food plant: bulk flour, sugar and milk on the weighbridge; palletized packaging; dry and refrigerated shipping.",
+    "i1": "Cold-chain slots with power for reefer trailers",
+    "i2": "Sanitary quarantine as a yard zone",
+    "i3": "Bulk receiving with mandatory weighing",
+    "i4": "Dry and refrigerated shipping with their own windows",
+    "segments": "Also for",
+    "s1": "Beverage",
+    "s2": "Chemical",
+    "s3": "Steel",
+    "s4": "Automotive",
+    "s5": "Logistics and DC",
+    "s6": "Agro"
+  },
+  "security": {
+    "kicker": "Security and governance",
+    "title": "Business rules in the database, not in good will.",
+    "db": {
+      "title": "Invariants in PostgreSQL",
+      "text": "Double-booked slot, a vehicle in two places, a closed ticket changed: the database refuses, even over raw SQL."
+    },
+    "trail": {
+      "title": "Append-only trail",
+      "text": "Every event with actor, source and time — typed, device or confirmed AI."
+    },
+    "roles": {
+      "title": "Role-based access",
+      "text": "Who schedules doesn't release, who weighs doesn't approve exceptions. Segregation of duties on every route."
+    },
+    "lgpd": {
+      "title": "Privacy (LGPD)",
+      "text": "Driver personal data with purpose, defined retention and minimum access."
+    }
+  },
+  "steps": {
+    "kicker": "Rollout",
+    "title": "From contract to a running yard.",
+    "s1": {
+      "title": "Yard design",
+      "text": "Zones, slots, docks, gates and scales drawn in the yard editor — or imported from the floor plan."
+    },
+    "s2": {
+      "title": "Integration",
+      "text": "Weighbridge, LPR, barrier and ERP connected; outbound data goes through a transactional outbox."
+    },
+    "s3": {
+      "title": "Assisted operation",
+      "text": "Tower on, team trained by role and KPIs from the first week."
+    },
+    "s4": {
+      "title": "Evolution",
+      "text": "AI proposals calibrated with the plant's real history."
+    }
+  },
+  "faq": {
+    "kicker": "FAQ",
+    "title": "The questions from the first meeting.",
+    "q1": "Do we need to replace scales, cameras or barriers?",
+    "a1": "No. YARD talks to Toledo and Filizola indicators over serial or TCP, to LPR cameras and to the PLC over OPC UA or MQTT Sparkplug B.",
+    "q2": "Cloud or plant server?",
+    "a2": "Both. The same application runs in the cloud or on-premise, with the field edge at the plant when the network requires it.",
+    "q3": "What if the network goes down?",
+    "a3": "The field switches to degraded operation: data quality is visible and no stale permissive opens a barrier.",
+    "q4": "Does the AI decide on its own?",
+    "a4": "No. It proposes with estimated impact and an expiry; it only executes what a person approves — and the database refuses any shortcut.",
+    "q5": "Can we see it running first?",
+    "a5": "Yes. The live demo runs a simulated food plant with gate, weighbridge, docks and tower moving. Ask for access."
+  },
+  "cta": {
+    "kicker": "Next step",
+    "title": "See your yard running before you sign.",
+    "text": "In 30 minutes we show YARD with your plant's layout: gate, weighbridge, docks and tower live.",
+    "primary": "Book a demo",
+    "secondary": "Open the system",
+    "email": "or write to contato@gplansis.com",
+    "whatsappMessage": "Hi! I'd like to book a demo of GPlanSiS | YARD (yard management).",
+    "emailSubject": "YARD - demo"
+  },
+  "footer": {
+    "text": "Industrial yard management · part of the GPlanSiS hub",
+    "login": "System access",
+    "contact": "Contact"
+  }
+}

@@ -1,0 +1,189 @@
+/* GPS//YARD DS — tokens.
+ *
+ * Estética ISA-101: fundo neutro, cor reservada para anormalidade. Se a tela está
+ * colorida, algo está errado — literalmente.
+ *
+ * Três temas (light / dark / hmi) e três densidades (compact / default / touch).
+ * Tema é troca de token, nunca fork de componente. Cor semântica, nunca cor literal.
+ */
+
+:root {
+  /* ---- escala neutra: a base de tudo em sala de controle ---- */
+  --color-bg: #eceef0;
+  --color-surface: #f7f8f9;
+  --color-surface-raised: #ffffff;
+  --color-surface-sunken: #e2e5e8;
+  --color-border: #c3c8ce;
+  --color-border-strong: #9aa2ab;
+  --color-text: #15191d;
+  --color-text-muted: #5a636c;
+  --color-text-inverse: #ffffff;
+
+  /* ---- estado de processo (ISA-101: usado com parcimônia) ---- */
+  --color-status-running: #1d7a3e;
+  --color-status-idle: #6b747d;
+  --color-status-waiting: #8a6a12;
+  --color-status-stopped: #43494f;
+  --color-status-moving: #1f5fa8;
+
+  /* ---- alarme (ISA-18.2: prioridade define a cor, não o gosto) ---- */
+  --color-alarm-critical: #b4181c;
+  --color-alarm-high: #d2620a;
+  --color-alarm-medium: #9a7400;
+  --color-alarm-low: #4a5560;
+  --color-alarm-ack: #6b747d;
+
+  /* ---- qualidade do dado: número sem frescor é mentira ---- */
+  --color-data-fresh: var(--color-text);
+  --color-data-stale: #8a6a12;
+  --color-data-invalid: #b4181c;
+  --color-data-nocomm: #6b747d;
+
+  /* ---- zonas de pátio (fundo neutro, só matiz suficiente para separar) ---- */
+  --color-zone-a: #dfe4e9;
+  --color-zone-b: #dde6e2;
+  --color-zone-c: #e6e2da;
+  --color-zone-d: #dee2ea;
+  --color-zone-e: #e4e0e6;
+  --color-zone-f: #ece0e0;
+
+  /* ---- foco e seleção ---- */
+  --color-focus: #1f5fa8;
+  --color-selected: #d6e4f5;
+
+  /* ---- espaço ---- */
+  --space-0: 0;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+
+  /* ---- tipografia: empacotada local, zero CDN ---- */
+  --font-sans: "Inter", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Cascadia Mono", ui-monospace, monospace;
+  --font-size-xs: 0.6875rem;
+  --font-size-sm: 0.8125rem;
+  --font-size-md: 0.875rem;
+  --font-size-lg: 1rem;
+  --font-size-data-sm: 0.875rem;
+  --font-size-data-lg: 1.5rem;
+  --font-size-data-xl: 2.5rem;
+  --font-weight-normal: 400;
+  --font-weight-data: 500; /* dado operacional nunca abaixo de 500: luva e sol */
+  --font-weight-strong: 600;
+
+  /* ---- densidade (default) ---- */
+  --density-row-height: 2rem;
+  --density-control-height: 2.25rem;
+  --density-touch-target: 2.75rem;
+  --density-padding-x: var(--space-3);
+  --density-padding-y: var(--space-2);
+  --density-font-size: var(--font-size-md);
+
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+  --border-width: 1px;
+  --shadow-raised: 0 1px 2px rgb(0 0 0 / 0.12);
+  --shadow-overlay: 0 8px 24px rgb(0 0 0 / 0.18);
+  --duration-fast: 90ms;
+  --duration-normal: 160ms;
+}
+
+/* Torre de controle: o operador vê o pátio inteiro sem rolar. */
+:root[data-density="compact"] {
+  --density-row-height: 1.625rem;
+  --density-control-height: 2rem;
+  --density-touch-target: 2rem;
+  --density-padding-x: var(--space-2);
+  --density-padding-y: var(--space-1);
+  --density-font-size: var(--font-size-sm);
+}
+
+/* Guarita e mobile: alvo de toque 44px, dedo com luva. */
+:root[data-density="touch"] {
+  --density-row-height: 3.25rem;
+  --density-control-height: 2.75rem;
+  --density-touch-target: 2.75rem;
+  --density-padding-x: var(--space-4);
+  --density-padding-y: var(--space-3);
+  --density-font-size: var(--font-size-lg);
+}
+
+:root[data-theme="dark"] {
+  --color-bg: #14171a;
+  --color-surface: #1b1f23;
+  --color-surface-raised: #23282d;
+  --color-surface-sunken: #101316;
+  --color-border: #343b42;
+  --color-border-strong: #4d565f;
+  --color-text: #e8ebee;
+  --color-text-muted: #9aa4ae;
+  --color-text-inverse: #14171a;
+
+  --color-status-running: #4cae68;
+  --color-status-idle: #8b949d;
+  --color-status-waiting: #d3a22a;
+  --color-status-stopped: #6d767e;
+  --color-status-moving: #5b9bd9;
+
+  --color-alarm-critical: #e8555a;
+  --color-alarm-high: #e8903f;
+  --color-alarm-medium: #d3b63a;
+  --color-alarm-low: #8b949d;
+
+  --color-data-fresh: var(--color-text);
+  --color-data-stale: #d3a22a;
+  --color-data-invalid: #e8555a;
+  --color-data-nocomm: #8b949d;
+
+  --color-zone-a: #22272c;
+  --color-zone-b: #202a26;
+  --color-zone-c: #2a2722;
+  --color-zone-d: #21262e;
+  --color-zone-e: #262230;
+  --color-zone-f: #2c2222;
+
+  --color-focus: #5b9bd9;
+  --color-selected: #1e3350;
+}
+
+/* HMI: painel de parede sob sol direto. Contraste máximo, nada de sutileza. */
+:root[data-theme="hmi"] {
+  --color-bg: #000000;
+  --color-surface: #0b0b0b;
+  --color-surface-raised: #161616;
+  --color-surface-sunken: #000000;
+  --color-border: #4a4a4a;
+  --color-border-strong: #7a7a7a;
+  --color-text: #ffffff;
+  --color-text-muted: #c8c8c8;
+  --color-status-running: #00d75f;
+  --color-status-waiting: #ffd400;
+  --color-alarm-critical: #ff2d2d;
+  --color-alarm-high: #ff8c00;
+  --color-data-stale: #ffd400;
+  --color-data-invalid: #ff2d2d;
+  --font-weight-data: 600;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-md);
+  -webkit-font-smoothing: antialiased;
+}
+
+:where(button, a, input, select, textarea):focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 1px;
+}
