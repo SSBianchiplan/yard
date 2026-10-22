@@ -117,8 +117,9 @@ flowchart LR
 
 - **Um worker de propósito**: o barramento de eventos da torre é in-process — dois workers seriam duas torres que não se veem.
 - **A API não fala português nem inglês**: erro é `{"error":{"code":"ERR_YARD_…","params":{…}}}`; o texto vive em `apps/web/src/locales/*/errors.json`.
-- **Migration só anda para frente** (13 migrations Alembic); cada uma lista no cabeçalho os invariantes que cria.
-- **Em produção** a API recusa subir com autenticação aberta, simulador ligado, CORS em localhost ou credencial padrão de banco (`Settings.validate_production`); as rotas de simulação nem são registradas e seeds/simulador recusam rodar com `YARD_ENV=prod`.
+- **Migration só anda para frente** (14 migrations Alembic); cada uma lista no cabeçalho os invariantes que cria.
+- **Em produção** a API recusa subir com autenticação aberta, simulador ligado, CORS em localhost ou credencial padrão de banco (`Settings.validate_production`); as rotas de simulação nem são registradas e seeds/simulador recusam rodar com `YARD_ENV=prod`. A única exceção é declarada: `YARD_DEMO=true` (instância de demonstração) mantém todas as outras travas e deixa o campo no simulador.
+- **Ator vem do token**: `actor`, `approved_by`, `opened_by`, `released_by`… mandados no corpo são ignorados fora do modo `open`; quem assina a trilha é quem autenticou. O WebSocket `/ws/yard` exige token e perfil operacional em `local` e `oidc`; o portal do transportador exige chave própria ou token OIDC com `carrier_code`.
 
 ## Stack
 
@@ -226,6 +227,7 @@ Todas com prefixo `YARD_` (lidas por `apps/api/app/core/config.py`, exceto as do
 |---|---|---|
 | `YARD_DATABASE_URL` | Conexão async com o PostgreSQL | `postgresql+asyncpg://yard:yard@localhost:5442/yard` (só dev) |
 | `YARD_ENV` | `dev`, `staging` ou `prod` (prod ativa as travas de produção) | `dev` |
+| `YARD_DEMO` | `true` numa instância de demonstração em `prod`: libera só o simulador de campo | `false` |
 | `YARD_PLANT_CODE`, `YARD_PLANT_TIMEZONE` | Planta e fuso | `PLANT-01`, `America/Sao_Paulo` |
 | `YARD_CORS_ORIGINS` | Origens permitidas (separadas por vírgula) | `http://localhost:5173` |
 | `YARD_AUTH_MODE` | `open` (só fora de prod), `local` ou `oidc` | `open` |

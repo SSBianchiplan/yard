@@ -5,7 +5,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db import get_session
-from app.core.security import Role, requires
+from app.core.security import Principal, Role, actor_of, current_principal, requires, with_actor
 from app.modules.tower import service
 from app.modules.tower.models import AiProposal, BottleneckSignal, HumanDecision
 from app.modules.tower.schemas import (
@@ -54,26 +54,37 @@ async def generate(session: AsyncSession = Depends(get_session)) -> list[Proposa
 
 @router.post("/proposals/{proposal_id}/approve", response_model=ProposalOut)
 async def approve(
-    proposal_id: UUID, data: ApproveIn, session: AsyncSession = Depends(get_session)
+    proposal_id: UUID,
+    data: ApproveIn,
+    session: AsyncSession = Depends(get_session),
+    principal: Principal = Depends(current_principal),
 ) -> ProposalOut:
+    data = with_actor(data, principal, "approved_by")
     return ProposalOut.model_validate(await service.approve(session, proposal_id, data))
 
 
 @router.post("/proposals/{proposal_id}/reject", response_model=ProposalOut)
 async def reject(
-    proposal_id: UUID, data: RejectIn, session: AsyncSession = Depends(get_session)
+    proposal_id: UUID,
+    data: RejectIn,
+    session: AsyncSession = Depends(get_session),
+    principal: Principal = Depends(current_principal),
 ) -> ProposalOut:
+    data = with_actor(data, principal, "rejected_by")
     return ProposalOut.model_validate(await service.reject(session, proposal_id, data))
 
 
 @router.post("/proposals/{proposal_id}/execute", response_model=ProposalOut)
 async def execute(
     proposal_id: UUID,
-    actor: str = Body(embed=True),
+    actor: str | None = Body(default=None, embed=True),
     session: AsyncSession = Depends(get_session),
+    principal: Principal = Depends(current_principal),
 ) -> ProposalOut:
     """Executa o que já foi aprovado. Sem aprovação registrada, recusa."""
-    return ProposalOut.model_validate(await service.execute(session, proposal_id, actor))
+    return ProposalOut.model_validate(
+        await service.execute(session, proposal_id, actor_of(principal, actor))
+    )
 
 
 @router.get("/proposals/{proposal_id}/decisions", response_model=list[DecisionOut])
@@ -105,11 +116,12 @@ async def bottlenecks(
 @router.post("/bottlenecks/{signal_id}/acknowledge", response_model=BottleneckOut)
 async def acknowledge(
     signal_id: UUID,
-    actor: str = Body(embed=True),
+    actor: str | None = Body(default=None, embed=True),
     session: AsyncSession = Depends(get_session),
+    principal: Principal = Depends(current_principal),
 ) -> BottleneckOut:
     return BottleneckOut.model_validate(
-        await service.acknowledge_bottleneck(session, signal_id, actor)
+        await service.acknowledge_bottleneck(session, signal_id, actor_of(principal, actor))
     )
 
 

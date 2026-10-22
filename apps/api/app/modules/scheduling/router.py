@@ -6,7 +6,7 @@ from sqlalchemy import Select, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db import get_session
-from app.core.security import Role, requires
+from app.core.security import Principal, Role, actor_of, current_principal, requires, with_actor
 from app.core.errors import ERR_NOT_FOUND, NotFound
 from app.modules.catalog.models import Carrier, OperationType, Product, Vehicle
 from app.modules.scheduling import service
@@ -162,44 +162,56 @@ async def availability(
 
 @router.post("/appointments", response_model=AppointmentOut, status_code=201)
 async def create_appointment(
-    data: AppointmentIn, session: AsyncSession = Depends(get_session)
+    data: AppointmentIn,
+    session: AsyncSession = Depends(get_session),
+    principal: Principal = Depends(current_principal),
 ) -> AppointmentOut:
-    appointment = await service.create(session, data)
+    appointment = await service.create(session, with_actor(data, principal, "actor"))
     return await _reload(session, appointment.id)
 
 
 @router.post("/appointments/{appointment_id}/confirm", response_model=AppointmentOut)
 async def confirm_appointment(
-    appointment_id: UUID, data: ConfirmIn, session: AsyncSession = Depends(get_session)
+    appointment_id: UUID,
+    data: ConfirmIn,
+    session: AsyncSession = Depends(get_session),
+    principal: Principal = Depends(current_principal),
 ) -> AppointmentOut:
-    await service.confirm(session, appointment_id, data)
+    await service.confirm(session, appointment_id, with_actor(data, principal, "actor"))
     return await _reload(session, appointment_id)
 
 
 @router.post("/appointments/{appointment_id}/reschedule", response_model=AppointmentOut)
 async def reschedule_appointment(
-    appointment_id: UUID, data: RescheduleIn, session: AsyncSession = Depends(get_session)
+    appointment_id: UUID,
+    data: RescheduleIn,
+    session: AsyncSession = Depends(get_session),
+    principal: Principal = Depends(current_principal),
 ) -> AppointmentOut:
-    await service.reschedule(session, appointment_id, data)
+    await service.reschedule(session, appointment_id, with_actor(data, principal, "actor"))
     return await _reload(session, appointment_id)
 
 
 @router.post("/appointments/{appointment_id}/cancel", response_model=AppointmentOut)
 async def cancel_appointment(
-    appointment_id: UUID, data: CancelIn, session: AsyncSession = Depends(get_session)
+    appointment_id: UUID,
+    data: CancelIn,
+    session: AsyncSession = Depends(get_session),
+    principal: Principal = Depends(current_principal),
 ) -> AppointmentOut:
-    await service.cancel(session, appointment_id, data)
+    await service.cancel(session, appointment_id, with_actor(data, principal, "actor"))
     return await _reload(session, appointment_id)
 
 
 @router.post("/appointments/{appointment_id}/no-show", response_model=AppointmentOut)
 async def no_show(
     appointment_id: UUID,
-    actor: str = Body(embed=True),
+    actor: str | None = Body(default=None, embed=True),
     session: AsyncSession = Depends(get_session),
+    principal: Principal = Depends(current_principal),
 ) -> AppointmentOut:
     """Não compareceu: libera a janela e a vaga reservada, com rastro de quem marcou."""
-    await service.mark_no_show(session, appointment_id, actor)
+    await service.mark_no_show(session, appointment_id, actor_of(principal, actor))
     return await _reload(session, appointment_id)
 
 

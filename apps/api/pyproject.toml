@@ -12,8 +12,11 @@ dependencies = [
     "asyncpg>=0.30",
     "alembic>=1.14",
     "python-multipart>=0.0.12",
-    "python-jose[cryptography]>=3.3",
+    # PyJWT no lugar do python-jose (sem manutenção; puxava `ecdsa`, CVE-2024-23342)
+    "PyJWT[crypto]>=2.10",
     "httpx>=0.27",
+    # CAs emSign comprometidas removidas em 2026.10.19 (GHSA-6q48-6c7w-9gw2)
+    "certifi>=2026.10.19",
     # campo (OT): opcionais até o modo live ser ligado
     "asyncio-mqtt>=0.16; extra == 'field'",
     "asyncua>=1.1; extra == 'field'",

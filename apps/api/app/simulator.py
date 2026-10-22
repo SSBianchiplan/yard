@@ -196,7 +196,7 @@ async def run(rate_per_minute: int, api_base: str | None) -> None:
 def main() -> None:
     from app.core.config import settings
 
-    if settings.is_production:
+    if settings.is_production and not settings.demo:
         raise SystemExit(
             "simulador recusado: YARD_ENV=prod. Em produção o pátio fala com CLP, "
             "balança e câmera de verdade — evento inventado aqui vira trilha de "

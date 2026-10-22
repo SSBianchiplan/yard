@@ -36,7 +36,7 @@ class CloseTicketIn(BaseModel):
 
 
 class ReprintIn(BaseModel):
-    actor: str
+    actor: str | None = None  # preenchido pelo servidor a partir do token
     reason_code: str
 
 

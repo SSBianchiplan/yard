@@ -6,12 +6,13 @@ from pydantic import BaseModel, ConfigDict, Field
 
 
 class ApproveIn(BaseModel):
-    approved_by: str = Field(min_length=2, max_length=120)
+    # Preenchido pelo servidor a partir do token; o valor do cliente é ignorado.
+    approved_by: str | None = Field(default=None, max_length=120)
     note: str | None = None
 
 
 class RejectIn(BaseModel):
-    rejected_by: str = Field(min_length=2, max_length=120)
+    rejected_by: str | None = Field(default=None, max_length=120)
     reason_code: str = Field(min_length=2, max_length=48)
     note: str | None = None
 

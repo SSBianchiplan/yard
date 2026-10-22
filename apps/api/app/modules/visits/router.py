@@ -5,7 +5,7 @@ from sqlalchemy import Select, desc, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db import get_session
-from app.core.security import Role, requires
+from app.core.security import Principal, Role, current_principal, requires, with_actor
 from app.core.errors import ERR_NOT_FOUND, NotFound
 from app.domain.enums import OPEN_STATES, VisitState
 from app.modules.catalog.models import Carrier, Driver, OperationType, Product, Vehicle
@@ -127,39 +127,55 @@ async def _reload(session: AsyncSession, visit_id: UUID) -> VisitOut:
 
 
 @router.post("/gate-in", response_model=VisitOut, status_code=201)
-async def gate_in(data: GateInIn, session: AsyncSession = Depends(get_session)) -> VisitOut:
-    visit = await service.gate_in(session, data)
+async def gate_in(
+    data: GateInIn,
+    session: AsyncSession = Depends(get_session),
+    principal: Principal = Depends(current_principal),
+) -> VisitOut:
+    visit = await service.gate_in(session, with_actor(data, principal, "actor"))
     return await _reload(session, visit.id)
 
 
 @router.post("/{visit_id}/slot", response_model=VisitOut)
 async def assign_slot(
-    visit_id: UUID, data: SlotAssignIn, session: AsyncSession = Depends(get_session)
+    visit_id: UUID,
+    data: SlotAssignIn,
+    session: AsyncSession = Depends(get_session),
+    principal: Principal = Depends(current_principal),
 ) -> VisitOut:
-    await service.assign_slot(session, visit_id, data)
+    await service.assign_slot(session, visit_id, with_actor(data, principal, "actor"))
     return await _reload(session, visit_id)
 
 
 @router.post("/{visit_id}/dock", response_model=VisitOut)
 async def assign_dock(
-    visit_id: UUID, data: DockAssignIn, session: AsyncSession = Depends(get_session)
+    visit_id: UUID,
+    data: DockAssignIn,
+    session: AsyncSession = Depends(get_session),
+    principal: Principal = Depends(current_principal),
 ) -> VisitOut:
-    await service.assign_dock(session, visit_id, data)
+    await service.assign_dock(session, visit_id, with_actor(data, principal, "actor"))
     return await _reload(session, visit_id)
 
 
 @router.post("/{visit_id}/reject", response_model=VisitOut)
 async def reject(
-    visit_id: UUID, data: RejectVisitIn, session: AsyncSession = Depends(get_session)
+    visit_id: UUID,
+    data: RejectVisitIn,
+    session: AsyncSession = Depends(get_session),
+    principal: Principal = Depends(current_principal),
 ) -> VisitOut:
     """Recusa a entrada: o veículo sai da fila e a vaga reservada volta para o pool."""
-    await service.reject(session, visit_id, data)
+    await service.reject(session, visit_id, with_actor(data, principal, "actor"))
     return await _reload(session, visit_id)
 
 
 @router.post("/{visit_id}/gate-out", response_model=VisitOut)
 async def gate_out(
-    visit_id: UUID, data: GateOutIn, session: AsyncSession = Depends(get_session)
+    visit_id: UUID,
+    data: GateOutIn,
+    session: AsyncSession = Depends(get_session),
+    principal: Principal = Depends(current_principal),
 ) -> VisitOut:
-    await service.gate_out(session, visit_id, data)
+    await service.gate_out(session, visit_id, with_actor(data, principal, "actor"))
     return await _reload(session, visit_id)

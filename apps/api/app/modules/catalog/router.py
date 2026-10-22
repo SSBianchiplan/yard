@@ -65,3 +65,39 @@ _register("/drivers", m.Driver, s.DriverIn, s.DriverOut, "full_name")
 _register("/vehicles", m.Vehicle, s.VehicleIn, s.VehicleOut, "plate")
 _register("/products", m.Product, s.ProductIn, s.ProductOut, "name")
 _register("/operation-types", m.OperationType, s.OperationTypeIn, s.OperationTypeOut, "code")
+
+
+# ---------------------- chave do portal da transportadora ----------------------
+# Só administrador: a chave é a identidade da transportadora no portal (auditoria
+# 2026-10, A7). Aparece em claro uma única vez; gerar de novo revoga a anterior.
+
+
+async def _carrier(session: AsyncSession, carrier_id: UUID) -> m.Carrier:
+    carrier = await session.get(m.Carrier, carrier_id)
+    if carrier is None:
+        raise NotFound(ERR_NOT_FOUND, entity="carrier", id=str(carrier_id))
+    return carrier
+
+
+@router.post(
+    "/carriers/{carrier_id}/portal-key",
+    status_code=201,
+    dependencies=[Depends(requires(Role.ADMIN))],
+)
+async def issue_portal_key(carrier_id: UUID, session: AsyncSession = Depends(get_session)):
+    from app.modules.scheduling.portal import issue_portal_key as _issue
+
+    carrier = await _carrier(session, carrier_id)
+    key, issued_at = await _issue(session, carrier)
+    return {"carrier_code": carrier.code, "portal_key": key, "issued_at": issued_at}
+
+
+@router.delete(
+    "/carriers/{carrier_id}/portal-key",
+    status_code=204,
+    dependencies=[Depends(requires(Role.ADMIN))],
+)
+async def revoke_portal_key(carrier_id: UUID, session: AsyncSession = Depends(get_session)):
+    from app.modules.scheduling.portal import revoke_portal_key as _revoke
+
+    await _revoke(session, await _carrier(session, carrier_id))

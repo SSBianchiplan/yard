@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import settings
 from app.core.db import get_session
-from app.core.security import Role, requires
+from app.core.security import Principal, Role, current_principal, requires, with_actor
 from app.core.errors import ERR_NOT_FOUND, Forbidden, NotFound
 from app.modules.catalog.models import Vehicle
 from app.modules.visits.models import Visit
@@ -123,16 +123,23 @@ async def get_ticket(ticket_id: UUID, session: AsyncSession = Depends(get_sessio
 
 
 @router.post("/tickets", response_model=TicketOut, status_code=201)
-async def open_ticket(data: OpenTicketIn, session: AsyncSession = Depends(get_session)):
-    ticket = await service.open_ticket(session, data)
+async def open_ticket(
+    data: OpenTicketIn,
+    session: AsyncSession = Depends(get_session),
+    principal: Principal = Depends(current_principal),
+):
+    ticket = await service.open_ticket(session, with_actor(data, principal, "operator"))
     return await _to_out(session, ticket)
 
 
 @router.post("/tickets/{ticket_id}/capture", response_model=TicketOut)
 async def capture(
-    ticket_id: UUID, data: CaptureIn, session: AsyncSession = Depends(get_session)
+    ticket_id: UUID,
+    data: CaptureIn,
+    session: AsyncSession = Depends(get_session),
+    principal: Principal = Depends(current_principal),
 ) -> TicketOut:
-    ticket = await service.capture(session, ticket_id, data)
+    ticket = await service.capture(session, ticket_id, with_actor(data, principal, "operator"))
     return await _to_out(session, ticket)
 
 
@@ -146,9 +153,12 @@ async def close_ticket(
 
 @router.post("/tickets/{ticket_id}/reprint", response_model=TicketOut)
 async def reprint(
-    ticket_id: UUID, data: ReprintIn, session: AsyncSession = Depends(get_session)
+    ticket_id: UUID,
+    data: ReprintIn,
+    session: AsyncSession = Depends(get_session),
+    principal: Principal = Depends(current_principal),
 ) -> TicketOut:
-    ticket = await service.reprint(session, ticket_id, data)
+    ticket = await service.reprint(session, ticket_id, with_actor(data, principal, "actor"))
     return await _to_out(session, ticket)
 
 

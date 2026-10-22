@@ -6,6 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import settings
 from app.core.db import get_session
+from app.core.ratelimit import SlidingWindowLimiter, client_ip
 from app.core.security import Principal, Role, current_principal, requires
 from app.modules.auth import service
 from app.modules.auth.models import AppUser, AuthAudit
@@ -26,11 +27,13 @@ users_router = APIRouter(
 )
 
 
+# Bloqueio por conta já existe (auth_max_failed_logins); este é o teto por origem, para
+# quem varre muitos e-mails do mesmo IP sem travar nenhuma conta específica.
+login_limiter = SlidingWindowLimiter(limit=20, window_seconds=300)
+
+
 def _ip(request: Request) -> str | None:
-    forwarded = request.headers.get("x-forwarded-for")
-    if forwarded:
-        return forwarded.split(",")[0].strip()[:64]
-    return request.client.host if request.client else None
+    return client_ip(request)
 
 
 @router.get("/config")
@@ -41,6 +44,7 @@ async def auth_config() -> dict[str, str]:
 
 @router.post("/login", response_model=SessionOut)
 async def login(payload: LoginIn, request: Request, session: AsyncSession = Depends(get_session)):
+    login_limiter.check(f"ip:{client_ip(request)}", scope="login")
     token, expires, user = await service.login(
         session, payload.email, payload.password, _ip(request)
     )

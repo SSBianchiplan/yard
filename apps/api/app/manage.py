@@ -1,6 +1,7 @@
 """Comandos de operação.
 
-    python -m app.manage service-user   # garante YARD_SIM_EMAIL como usuário de serviço
+    python -m app.manage service-user        # garante YARD_SIM_EMAIL como usuário de serviço
+    python -m app.manage portal-key CODIGO   # gera/troca a chave do portal da transportadora
 
 Usuário de serviço (simulador, integração) não passa pela tela: não tem quem troque a
 senha no primeiro acesso, e o perfil é só o que a integração precisa.
@@ -55,12 +56,29 @@ async def service_user() -> str:
     return result
 
 
+async def portal_key(code: str) -> str:
+    """Gera (ou troca, revogando a anterior) a chave do portal de uma transportadora."""
+    from app.modules.catalog.models import Carrier
+    from app.modules.scheduling.portal import issue_portal_key
+
+    async with SessionLocal() as session:
+        carrier = (
+            await session.execute(select(Carrier).where(Carrier.code == code))
+        ).scalar_one_or_none()
+        if carrier is None:
+            raise SystemExit(f"transportadora {code!r} não encontrada")
+        key, _ = await issue_portal_key(session, carrier)
+    return key
+
+
 def main() -> None:
     command = sys.argv[1] if len(sys.argv) > 1 else ""
     if command == "service-user":
         print(asyncio.run(service_user()))
+    elif command == "portal-key" and len(sys.argv) == 3:
+        print(asyncio.run(portal_key(sys.argv[2])))
     else:
-        raise SystemExit("uso: python -m app.manage service-user")
+        raise SystemExit("uso: python -m app.manage service-user | portal-key CODIGO")
 
 
 if __name__ == "__main__":

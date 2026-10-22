@@ -44,7 +44,7 @@ class AnswerIn(BaseModel):
 
 class ChecklistAnswerIn(BaseModel):
     answers: list[AnswerIn]
-    actor: str
+    actor: str | None = None  # preenchido pelo servidor a partir do token
 
 
 class CommandIn(BaseModel):

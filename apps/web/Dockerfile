@@ -12,7 +12,8 @@ COPY apps/web apps/web
 # O gate de i18n roda no build: locale incompleto não vira imagem.
 RUN npm run build --workspace @gplansis/web
 
-FROM nginx:1.27-alpine
+# 1.27 (mainline) não recebe mais correção; imagem sem root, já escuta em 8080.
+FROM nginxinc/nginx-unprivileged:1.28-alpine
 COPY apps/web/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /repo/apps/web/dist /usr/share/nginx/html
 EXPOSE 8080

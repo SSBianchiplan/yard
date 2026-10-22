@@ -5,7 +5,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db import get_session
-from app.core.security import Role, requires
+from app.core.security import Principal, Role, actor_of, current_principal, requires, with_actor
 from app.modules.catalog.models import Vehicle
 from app.modules.moves import service
 from app.modules.moves.models import Discrepancy, DockVisit, MoveDeviation, MoveTask, Spotter, VisitHold
@@ -131,14 +131,18 @@ async def cancel(
     reason_code: str = Body(embed=True),
     actor: str = Body(default="web", embed=True),
     session: AsyncSession = Depends(get_session),
+    principal: Principal = Depends(current_principal),
 ) -> MoveTaskOut:
     """Cancela a tarefa com motivo — tarefa que morre em silêncio some do KPI."""
-    task = await service.cancel(session, task_id, reason_code, actor)
+    task = await service.cancel(session, task_id, reason_code, actor_of(principal, actor))
     return await _to_out(session, task)
 
 
 @router.post("/sync")
-async def sync(events: list[dict], session: AsyncSession = Depends(get_session)):
+async def sync(
+    events: list[dict] = Body(max_length=500),
+    session: AsyncSession = Depends(get_session),
+):
     """Lote do PWA offline. Idempotente por `task_id` + estado — reenviar é seguro."""
     return await service.sync_offline(session, events)
 
@@ -166,7 +170,13 @@ async def deviations(
 
 # ----------------------------- doca -----------------------------
 
-dock_router = APIRouter(prefix="/docks", tags=["docks"])
+dock_router = APIRouter(
+    prefix="/docks",
+    tags=["docks"],
+    # Auditoria 2026-10: sem esta dependência as rotas de doca (holds, estágio,
+    # divergências) ficavam abertas a quem não tinha token.
+    dependencies=[Depends(requires(Role.DOCK, Role.SUPERVISOR, Role.CONTROLLER, Role.SPOTTER))],
+)
 
 
 @dock_router.post("/visits/{visit_id}/stage", response_model=DockVisitOut)
@@ -189,8 +199,12 @@ async def dock_visits(visit_id: UUID, session: AsyncSession = Depends(get_sessio
 
 @dock_router.post("/dock-visits/{dock_visit_id}/discrepancies", status_code=201)
 async def report_discrepancy(
-    dock_visit_id: UUID, data: DiscrepancyIn, session: AsyncSession = Depends(get_session)
+    dock_visit_id: UUID,
+    data: DiscrepancyIn,
+    session: AsyncSession = Depends(get_session),
+    principal: Principal = Depends(current_principal),
 ):
+    data = with_actor(data, principal, "reported_by")
     discrepancy = await service.report_discrepancy(session, dock_visit_id, data)
     return {"id": discrepancy.id, "kind": discrepancy.kind, "state": discrepancy.state}
 
@@ -218,8 +232,13 @@ async def list_discrepancies(
 
 
 @dock_router.post("/visits/{visit_id}/holds", response_model=HoldOut, status_code=201)
-async def open_hold(visit_id: UUID, data: HoldIn, session: AsyncSession = Depends(get_session)):
-    hold = await service.open_hold(session, visit_id, data)
+async def open_hold(
+    visit_id: UUID,
+    data: HoldIn,
+    session: AsyncSession = Depends(get_session),
+    principal: Principal = Depends(current_principal),
+):
+    hold = await service.open_hold(session, visit_id, with_actor(data, principal, "opened_by"))
     return HoldOut.model_validate(hold)
 
 
@@ -235,9 +254,15 @@ async def list_holds(visit_id: UUID, session: AsyncSession = Depends(get_session
 
 @dock_router.post("/holds/{hold_id}/release", response_model=HoldOut)
 async def release_hold(
-    hold_id: UUID, data: HoldReleaseIn, session: AsyncSession = Depends(get_session)
+    hold_id: UUID,
+    data: HoldReleaseIn,
+    session: AsyncSession = Depends(get_session),
+    principal: Principal = Depends(current_principal),
 ):
-    hold = await service.release_hold(session, hold_id, data)
+    # Segregação (quem abriu não libera) só vale se os dois nomes vierem do token.
+    hold = await service.release_hold(
+        session, hold_id, with_actor(data, principal, "released_by")
+    )
     return HoldOut.model_validate(hold)
 
 

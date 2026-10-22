@@ -1,7 +1,7 @@
-from datetime import date
+from datetime import date, datetime
 from uuid import UUID
 
-from sqlalchemy import Boolean, Date, ForeignKey, String, Text
+from sqlalchemy import Boolean, Date, DateTime, ForeignKey, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.db import Base, PkMixin, TimestampMixin
@@ -27,6 +27,9 @@ class Carrier(PkMixin, TimestampMixin, Base):
     name: Mapped[str] = mapped_column(String(160))
     tax_id: Mapped[str | None] = mapped_column(String(32))  # CNPJ — termo próprio, não traduz
     active: Mapped[bool] = mapped_column(Boolean, default=True)
+    # Portal: só o SHA-256 da chave da transportadora (a chave aparece uma vez, ao gerar).
+    portal_key_hash: Mapped[str | None] = mapped_column(String(64))
+    portal_key_issued_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
 class Driver(PkMixin, TimestampMixin, Base):

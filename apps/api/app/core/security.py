@@ -11,10 +11,9 @@ from dataclasses import dataclass, field
 from functools import lru_cache
 from typing import Any
 
-import httpx
+import jwt
 from fastapi import Depends, Request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from jose import JWTError, jwt
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import settings
@@ -54,41 +53,58 @@ bearer = HTTPBearer(auto_error=False)
 
 
 @lru_cache(maxsize=1)
-def _jwks_client() -> httpx.Client:
-    return httpx.Client(timeout=5)
+def _jwks_client() -> jwt.PyJWKClient:
+    """Chaves públicas do realm, cacheadas em processo (antes: baixadas a cada pedido).
 
-
-def _jwks() -> dict[str, Any]:
-    """Chaves públicas do realm. Cacheadas em processo; rotação derruba o cache no erro."""
-    response = _jwks_client().get(settings.oidc_jwks_url)
-    response.raise_for_status()
-    return response.json()
+    O `PyJWKClient` guarda o JWKS por `lifespan` segundos e, quando chega um `kid`
+    desconhecido (rotação no Keycloak), busca o conjunto de novo uma vez.
+    """
+    return jwt.PyJWKClient(settings.oidc_jwks_url, cache_jwk_set=True, lifespan=600, timeout=5)
 
 
 def _decode(token: str) -> dict[str, Any]:
+    """Valida o token do Keycloak: assinatura RS256, emissor, audiência e validade.
+
+    PyJWT no lugar do python-jose (auditoria 2026-10, M3): o jose estava sem manutenção
+    e arrastava o `ecdsa` (CVE-2024-23342). O algoritmo continua fixo — nunca o do
+    cabeçalho do token.
+    """
     try:
+        signing_key = _jwks_client().get_signing_key_from_jwt(token)
         return jwt.decode(
             token,
-            _jwks(),
+            signing_key.key,
             algorithms=["RS256"],
-            audience=settings.oidc_audience,
+            audience=settings.oidc_audience or None,
             issuer=settings.oidc_issuer,
-            options={"verify_aud": bool(settings.oidc_audience)},
+            options={
+                "verify_aud": bool(settings.oidc_audience),
+                "require": ["exp", "iss", "sub"],
+            },
+            leeway=30,
         )
-    except JWTError as exc:
+    except (jwt.PyJWTError, jwt.PyJWKClientError) as exc:
         raise Unauthenticated(ERR_UNAUTHENTICATED, reason="invalid_token") from exc
 
 
 def _principal_from_claims(claims: dict[str, Any]) -> Principal:
+    """Perfis do realm + perfis do cliente DESTA API, e só dela.
+
+    Antes somávamos os papéis de todos os clientes em `resource_access`: um papel de
+    mesmo nome dado em outro aplicativo do realm virava permissão aqui.
+    """
     realm_roles = set(claims.get("realm_access", {}).get("roles", []))
     client_roles: set[str] = set()
-    for client in claims.get("resource_access", {}).values():
-        client_roles.update(client.get("roles", []))
+    if settings.oidc_audience:
+        own = claims.get("resource_access", {}).get(settings.oidc_audience, {})
+        client_roles.update(own.get("roles", []))
+    carrier_code = claims.get("carrier_code")
     return Principal(
         subject=claims.get("preferred_username") or claims.get("sub", "unknown"),
         name=claims.get("name") or claims.get("preferred_username") or "unknown",
-        roles=frozenset(realm_roles | client_roles),
-        carrier_code=claims.get("carrier_code"),
+        # MASTER é sintético (só do banco local); token externo não o concede.
+        roles=frozenset((realm_roles | client_roles) - {Role.MASTER}),
+        carrier_code=str(carrier_code) if carrier_code else None,
     )
 
 
@@ -136,9 +152,31 @@ async def current_principal(
 
     if credentials is None or not credentials.credentials:
         raise Unauthenticated(ERR_UNAUTHENTICATED, reason="missing_token")
+    return await principal_from_token(session, credentials.credentials)
+
+
+async def principal_from_token(session: AsyncSession, token: str) -> Principal:
+    """Token → quem é, nos dois modos autenticados. Usado pela API e pelo WebSocket."""
+    if not token:
+        raise Unauthenticated(ERR_UNAUTHENTICATED, reason="missing_token")
     if settings.auth_mode == "local":
-        return await principal_from_local_token(session, credentials.credentials)
-    return _principal_from_claims(_decode(credentials.credentials))
+        return await principal_from_local_token(session, token)
+    if settings.auth_mode == "oidc":
+        return _principal_from_claims(_decode(token))
+    raise Unauthenticated(ERR_UNAUTHENTICATED, reason="invalid_token")
+
+
+# Perfis que operam o pátio e podem assinar o canal ao vivo (WebSocket/SSE). O evento
+# carrega placa e visita: portal de transportadora e dispositivo de campo ficam de fora.
+LIVE_FEED_ROLES = (
+    Role.GATE,
+    Role.SCALE,
+    Role.SPOTTER,
+    Role.DOCK,
+    Role.SUPERVISOR,
+    Role.CONTROLLER,
+    Role.SCHEDULER,
+)
 
 
 def requires(*roles: str):
@@ -162,3 +200,14 @@ def actor_of(principal: Principal, declared: str | None = None) -> str:
     if settings.auth_mode == "open" and declared:
         return declared
     return principal.subject
+
+
+def with_actor(data, principal: Principal, *fields: str):
+    """Cópia do corpo com os campos de ator (`actor`, `approved_by`, …) vindos do token.
+
+    O cliente pode continuar mandando esses campos (compatibilidade com o front e com
+    integrações antigas), mas o valor é descartado: assina a trilha quem autenticou.
+    """
+    return data.model_copy(
+        update={name: actor_of(principal, getattr(data, name, None)) for name in fields}
+    )

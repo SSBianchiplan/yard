@@ -168,6 +168,13 @@ async def capture(session: AsyncSession, ticket_id: UUID, data: CaptureIn) -> We
             raise Conflict(
                 ERR_YARD_WEIGHT_MANUAL_NEEDS_SECOND_FACTOR, reference=ticket.reference
             )
+        # Segundo fator é OUTRA pessoa: o operador (vindo do token) não se autoriza.
+        if data.operator and (
+            data.second_factor_user.strip().lower() == data.operator.strip().lower()
+        ):
+            raise Conflict(
+                ERR_YARD_WEIGHT_MANUAL_NEEDS_SECOND_FACTOR, reference=ticket.reference
+            )
         sample = ScaleSample(
             weight_kg=data.manual_weight_kg, stable=True, occurred_at=now(), quality="good"
         )

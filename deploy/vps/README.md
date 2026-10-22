@@ -26,7 +26,8 @@ bloco do Caddy (validado antes do reload). É idempotente.
 
 1. DNS `yard.gplansis.com` → IP público do servidor.
 2. Criar `/opt/yard/.env` **no servidor** (segredos gerados lá, com `openssl rand`):
-   `YARD_ENV=staging`, `YARD_PORT=8990`, `YARD_DB_USER/NAME/PASSWORD`,
+   `YARD_ENV=prod`, `YARD_DEMO=true` (demonstração: campo pelo simulador, todas as
+   outras travas de produção ligadas), `YARD_PORT=8990`, `YARD_DB_USER/NAME/PASSWORD`,
    `YARD_DATABASE_URL`, `YARD_CORS_ORIGINS=https://yard.gplansis.com`,
    `YARD_AUTH_MODE=local`, `YARD_AUTH_SECRET`, `YARD_MASTER_EMAIL`,
    `YARD_MASTER_NAME`, `YARD_MASTER_PASSWORD`, `YARD_SIM_EMAIL`, `YARD_SIM_PASSWORD`,
@@ -47,3 +48,18 @@ ssh $HOST 'journalctl -u yard -f'        # API
 ssh $HOST 'journalctl -u yard-sim -f'    # simulador
 ssh $HOST 'systemctl restart yard'       # nunca pkill uvicorn: há outros sistemas na máquina
 ```
+
+## Portal do transportador
+
+O portal (`/portal/v1/*`) não aceita mais só o código da transportadora. Cada uma recebe
+uma chave própria, mostrada uma vez (gerar de novo revoga a anterior):
+
+```bash
+ssh $HOST 'runuser -u yard -- bash -c "set -a; . /opt/yard/.env; set +a; cd /opt/yard/api;
+  /opt/yard/.venv/bin/python -m app.manage portal-key CODIGO_DA_TRANSPORTADORA"'
+```
+
+ou, pela API, `POST /api/v1/catalog/carriers/{id}/portal-key` (perfil `yard.admin`).
+A transportadora chama o portal com `Authorization: Bearer ypk_…`. No modo `oidc` vale
+também o token do Keycloak com o perfil `portal.carrier` e a claim `carrier_code`.
+

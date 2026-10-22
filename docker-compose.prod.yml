@@ -12,7 +12,8 @@
 
 services:
   traefik:
-    image: traefik:v3.2
+    # v3.2 saiu de suporte (auditoria 2026-10): linha v3 corrente; fixe a versão/digest ao publicar.
+    image: traefik:v3
     restart: unless-stopped
     command:
       - --providers.docker=true
@@ -55,7 +56,8 @@ services:
     expose: ['5432']
 
   keycloak:
-    image: quay.io/keycloak/keycloak:26.0
+    # >= 26.7.2: corrige GHSA-4gv3-mc9p-5wqc (tomada de conta pelo reset-credentials).
+    image: quay.io/keycloak/keycloak:26.7.2
     restart: unless-stopped
     command: start --optimized --hostname https://auth.${YARD_DOMAIN}
     environment:
@@ -82,6 +84,9 @@ services:
       context: ./apps/api
       dockerfile: Dockerfile
     restart: unless-stopped
+    # imagem roda como uid 10001; sem capacidades nem escalada de privilégio
+    cap_drop: [ALL]
+    security_opt: ['no-new-privileges:true']
     environment:
       YARD_ENV: prod
       YARD_AUTH_MODE: oidc

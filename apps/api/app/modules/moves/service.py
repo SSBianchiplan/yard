@@ -340,8 +340,13 @@ async def queue(session: AsyncSession, spotter_code: str | None = None) -> list[
 async def sync_offline(session: AsyncSession, events: list[dict]) -> dict[str, int]:
     """Reconciliação do PWA: lote idempotente, ordem pelo `occurred_at` do dispositivo."""
     applied = skipped = 0
-    for event in sorted(events, key=lambda e: e.get("occurred_at", "")):
-        task_id = UUID(event["task_id"])
+    events = [e for e in events if isinstance(e, dict)]
+    for event in sorted(events, key=lambda e: str(e.get("occurred_at", ""))):
+        try:
+            task_id = UUID(str(event["task_id"]))
+        except (KeyError, ValueError):
+            skipped += 1  # evento malformado do dispositivo: não derruba o lote (era 500)
+            continue
         task = (
             await session.execute(select(MoveTask).where(MoveTask.id == task_id))
         ).scalar_one_or_none()
@@ -364,7 +369,7 @@ async def sync_offline(session: AsyncSession, events: list[dict]) -> dict[str, i
                     ),
                 )
             applied += 1
-        except Conflict:
+        except (Conflict, NotFound, KeyError, ValueError):
             skipped += 1
     return {"applied": applied, "skipped": skipped}
 

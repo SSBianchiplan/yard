@@ -12,7 +12,7 @@ import secrets
 from datetime import UTC, datetime, timedelta
 from typing import Any
 
-from jose import JWTError, jwt
+import jwt
 
 from app.core.config import settings
 from app.core.errors import ERR_UNAUTHENTICATED, Unauthenticated
@@ -77,6 +77,12 @@ def issue_token(subject: str, user_id: str) -> tuple[str, datetime]:
 
 def decode_token(token: str) -> dict[str, Any]:
     try:
-        return jwt.decode(token, settings.auth_secret, algorithms=["HS256"], issuer=_ISSUER)
-    except JWTError as exc:
+        return jwt.decode(
+            token,
+            settings.auth_secret,
+            algorithms=["HS256"],
+            issuer=_ISSUER,
+            options={"require": ["exp", "iss", "uid"]},
+        )
+    except jwt.PyJWTError as exc:
         raise Unauthenticated(ERR_UNAUTHENTICATED, reason="invalid_token") from exc

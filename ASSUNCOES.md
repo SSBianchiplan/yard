@@ -16,7 +16,7 @@ Dúvida de negócio não para o código: vira assunção documentada aqui, marca
 | 9 | Pendência de saída é um campo único (`blocked_reason_code`). Vira tabela `quality_hold`/fiscal na Fatia 5/7. | `visit` | primeira pendência com múltiplas origens |
 | 10 | Retenção de imagem de LPR/pesagem: 90 dias, depois anonimização. Placa isolada mantida 12 meses por necessidade fiscal. | `docs/SPEC-PRODUTO.md` §3.11 | DPO da planta revisar |
 | 11 | TimescaleDB e pgvector são opcionais no dev local (a migration degrada para tabela comum) e obrigatórios em produção. | `alembic/0001_fatia1_core.py` | preparar ambiente de produção |
-| 12 | Autenticação ainda não está ligada: `actor` chega como string do cliente. Keycloak entra na Fatia 2, antes de qualquer exposição externa. | `visits/schemas.py` | **antes** de expor o portal do transportador |
+| 12 | ~~Autenticação ainda não está ligada: `actor` chega como string do cliente.~~ **Resolvida (auditoria 2026-10):** todo ator de trilha vem do token (`actor_of`/`with_actor`); o portal usa chave por transportadora ou token OIDC com `carrier_code`. | `core/security.py`, `scheduling/portal.py` | — |
 | 13 | Barramento de eventos é in-process (`core/events.Hub`). O contrato `publish(topic, payload)` não muda quando virar MQTT/NATS na Fatia 6. | `core/events.py` | segundo processo de API subir |
 | 14 | Unidade de exibição de peso é configurável (kg/t/lb); o dado trafega sempre em kg. | `lib/format.ts` | cliente exigir lb como padrão |
 | 15 | Seed usa 7 dias × 400 movimentos e 46 veículos no retrato do agora — abaixo do pico de 60 do cenário-referência, para deixar folga de vaga na demonstração. | `app/seed.py` | teste de carga do pico |

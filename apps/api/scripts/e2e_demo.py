@@ -656,7 +656,11 @@ class Demo:
         print(f"\033[1mYARD — demonstração ponta a ponta\033[0m")
         print(f"placa {self.plate} · motorista {self.driver_name} · API {self.base}")
         health = self.client.get(f"{self.base}/health").json()
-        print(f"ambiente {health['env']} · campo {health['field_mode']} · auth {health['auth_mode']}")
+        # fora de dev o /health só diz "ok" (não expõe modo de auth nem ambiente)
+        print(
+            f"ambiente {health.get('env', '?')} · campo {health.get('field_mode', '?')}"
+            f" · auth {health.get('auth_mode', '?')}"
+        )
 
         required = {
             "agendamento": "driver",

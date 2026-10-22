@@ -11,6 +11,11 @@ class Settings(BaseSettings):
     plant_timezone: str = "America/Sao_Paulo"
     cors_origins: str = "http://localhost:5173"
     env: str = "dev"  # dev | staging | prod
+    # Instância de DEMONSTRAÇÃO pública (yard.gplansis.com): com `YARD_ENV=prod` todas as
+    # travas de produção valem (autenticação, CORS, banco, OpenAPI fechado), exceto a do
+    # campo — o pátio continua sendo movido pelo simulador, e isso fica declarado aqui em
+    # vez de escondido atrás de `YARD_ENV=staging`. Em planta real fica `false`.
+    demo: bool = False
 
     # ---- autenticação -------------------------------------------------------
     # `open` só existe fora de produção; em prod o boot falha se ficar aberto.
@@ -64,8 +69,11 @@ class Settings(BaseSettings):
 
     @property
     def simulators_enabled(self) -> bool:
-        """Rota de simulação só existe fora de produção — em prod ela nem é registrada."""
-        return not self.is_production and self.field_mode == "simulator"
+        """Rota de simulação só existe fora de produção — em prod ela nem é registrada.
+
+        Exceção declarada: instância de demonstração (`YARD_DEMO=true`).
+        """
+        return self.field_mode == "simulator" and (not self.is_production or self.demo)
 
     @property
     def sync_database_url(self) -> str:
@@ -88,8 +96,10 @@ class Settings(BaseSettings):
         problems: list[str] = []
         if self.auth_mode not in ("oidc", "local"):
             problems.append("YARD_AUTH_MODE deve ser 'oidc' ou 'local' em produção")
-        if self.field_mode != "live":
-            problems.append("YARD_FIELD_MODE deve ser 'live' em produção")
+        if self.field_mode != "live" and not self.demo:
+            problems.append(
+                "YARD_FIELD_MODE deve ser 'live' em produção (ou YARD_DEMO=true numa demonstração)"
+            )
         if self.field_mode == "live" and not (self.mqtt_host or self.opcua_endpoint):
             problems.append("defina YARD_MQTT_HOST e/ou YARD_OPCUA_ENDPOINT para o campo")
         if self.auth_mode == "oidc" and "localhost" in self.oidc_issuer:
@@ -98,6 +108,12 @@ class Settings(BaseSettings):
             problems.append("YARD_CORS_ORIGINS não pode ser '*' nem localhost em produção")
         if "yard:yard@" in self.database_url:
             problems.append("credencial padrão do banco em produção")
+        if self.auth_mode == "local" and (
+            len(self.auth_secret) < 32 or self.auth_secret.startswith("dev-inseguro")
+        ):
+            problems.append("YARD_AUTH_SECRET fraco ou padrão em produção")
+        if self.auth_mode == "oidc" and not self.oidc_audience:
+            problems.append("YARD_OIDC_AUDIENCE vazio: o token de outro cliente do realm valeria")
 
         if problems:
             raise ValueError(

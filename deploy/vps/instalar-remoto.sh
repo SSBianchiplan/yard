@@ -17,6 +17,10 @@ as_yard() {
 id yard >/dev/null 2>&1 || useradd --system --home /var/lib/yard --shell /usr/sbin/nologin yard
 install -d -o yard -g yard -m 750 /var/lib/yard
 chown yard:yard "$APP/.env"; chmod 600 "$APP/.env"
+# Código é do root e só ele escreve (o rsync antigo deixava uid 501 e modo 777: qualquer
+# conta da máquina podia trocar o app que roda como `yard`).
+chown -R root:root "$APP/api" "$APP/web" "$APP/deploy"
+chmod -R u+rwX,go+rX,go-w "$APP/api" "$APP/web" "$APP/deploy"
 
 # 2. banco: papel e base próprios; extensões criadas pelo superusuário
 sudo -u postgres psql -v ON_ERROR_STOP=1 -q <<SQL
@@ -38,6 +42,9 @@ SQL
 [ -x "$APP/.venv/bin/python" ] || python3 -m venv "$APP/.venv"
 "$APP/.venv/bin/pip" install -q --upgrade pip
 "$APP/.venv/bin/pip" install -q -e "$APP/api"
+# python-jose (sem manutenção) e ecdsa (CVE-2024-23342) saíram: o token agora é PyJWT
+"$APP/.venv/bin/pip" uninstall -q -y python-jose ecdsa 2>/dev/null || true
+"$APP/.venv/bin/pip" install -q --upgrade 'certifi>=2026.10.19'
 
 # 4. migrations (o ExecStartPre também roda; aqui falha cedo e visível)
 as_yard "$APP/.venv/bin/python" -m alembic upgrade head

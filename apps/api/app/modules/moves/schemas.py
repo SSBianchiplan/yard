@@ -74,18 +74,18 @@ class DiscrepancyIn(BaseModel):
     evidence_ref: str  # foto obrigatória — o CHECK do banco também exige
     quantity: Decimal | None = None
     note: str | None = None
-    reported_by: str
+    reported_by: str | None = None  # preenchido pelo servidor a partir do token
 
 
 class HoldIn(BaseModel):
     kind: str = Field(pattern="^(quality|fiscal|safety|commercial)$")
     reason_code: str
-    opened_by: str
+    opened_by: str | None = None  # preenchido pelo servidor a partir do token
     note: str | None = None
 
 
 class HoldReleaseIn(BaseModel):
-    released_by: str
+    released_by: str | None = None  # preenchido pelo servidor a partir do token
 
 
 class HoldOut(BaseModel):

@@ -9,7 +9,7 @@ from sqlalchemy.exc import IntegrityError
 from app.core.config import settings
 from app.core.errors import ERR_DUPLICATE, AppError, app_error_handler
 from app.core.events import hub
-from app.core.security import Role, requires
+from app.core.security import LIVE_FEED_ROLES, requires
 from app.modules.auth.router import router as auth_router
 from app.modules.auth.router import users_router
 from app.modules.iot.runtime import runtime as field_runtime
@@ -184,7 +184,13 @@ app.include_router(portal_router)
 
 @app.get("/health", tags=["ops"])
 async def health() -> dict[str, str]:
-    """Liveness: o processo está de pé. Não toca no banco de propósito."""
+    """Liveness: o processo está de pé. Não toca no banco de propósito.
+
+    Fora de desenvolvimento não diz modo de autenticação, ambiente nem campo: isso é
+    mapa para quem procura a instância mal configurada (auditoria 2026-10).
+    """
+    if settings.env != "dev":
+        return {"status": "ok"}
     return {
         "status": "ok",
         "env": settings.env,
@@ -205,32 +211,37 @@ async def ready():
         async with SessionLocal() as session:
             await session.execute(sql_text("SELECT 1"))
     except Exception as exc:  # noqa: BLE001
-        return JSONResponse(
-            status_code=503, content={"status": "degraded", "reason": str(exc)[:200]}
-        )
+        # O texto do erro (host, usuário, base) vai para o log, não para a internet.
+        log.error("readiness: banco indisponível: %s", " ".join(str(exc).split())[:300])
+        return JSONResponse(status_code=503, content={"status": "degraded"})
     return {"status": "ready"}
+
+
+def _ws_token(socket: WebSocket) -> str:
+    """Navegador não manda Authorization em WebSocket; o token vai no subprotocolo
+    (`yard.bearer, <token>`) — cabeçalho, e não query string, para não parar em log
+    de acesso do proxy nem do uvicorn."""
+    offered = [p.strip() for p in socket.headers.get("sec-websocket-protocol", "").split(",")]
+    return offered[1] if len(offered) == 2 and offered[0] == "yard.bearer" else ""
 
 
 @app.websocket("/ws/yard")
 async def yard_socket(socket: WebSocket) -> None:
-    # Modo `local`: o evento carrega placa, então o canal exige o mesmo token da API.
-    # Navegador não manda Authorization em WebSocket; o token vai no subprotocolo
-    # (`yard.bearer, <token>`) — cabeçalho, e não query string, para não parar em log
-    # de acesso do proxy nem do uvicorn.
+    # O evento carrega placa e visita: o canal exige o mesmo token da API em TODO modo
+    # autenticado (local e oidc) e um perfil operacional do pátio. Antes, no modo `oidc`
+    # o canal ficava aberto e, no `local`, bastava qualquer usuário ativo.
     subprotocol = None
-    if settings.auth_mode == "local":
+    if settings.auth_mode != "open":
         from app.core.db import SessionLocal
-        from app.core.errors import AppError as _AppError
-        from app.core.security import principal_from_local_token
+        from app.core.security import LIVE_FEED_ROLES, principal_from_token
 
-        offered = [
-            p.strip() for p in socket.headers.get("sec-websocket-protocol", "").split(",")
-        ]
-        token = offered[1] if len(offered) == 2 and offered[0] == "yard.bearer" else ""
         try:
             async with SessionLocal() as session:
-                await principal_from_local_token(session, token)
-        except _AppError:
+                principal = await principal_from_token(session, _ws_token(socket))
+        except AppError:
+            await socket.close(code=status.WS_1008_POLICY_VIOLATION)
+            return
+        if not principal.has(*LIVE_FEED_ROLES):
             await socket.close(code=status.WS_1008_POLICY_VIOLATION)
             return
         subprotocol = "yard.bearer"
@@ -242,7 +253,11 @@ async def yard_socket(socket: WebSocket) -> None:
         return
 
 
-@app.get("/sse/yard", tags=["ops"], dependencies=[Depends(requires(Role.CONTROLLER, Role.GATE))])
+@app.get(
+    "/sse/yard",
+    tags=["ops"],
+    dependencies=[Depends(requires(*LIVE_FEED_ROLES))],
+)
 async def yard_sse() -> StreamingResponse:
     """Fallback para rede de planta que bloqueia WebSocket."""
 
